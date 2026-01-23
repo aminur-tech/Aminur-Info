@@ -15,19 +15,19 @@ export default function Home() {
                 <Hero></Hero>
             </div>
 
-            <div id="skills" className="mt-20">
+            <div id="skills" className="mt-24">
                 <Skills />
             </div>
 
-            <div id="projects" className="mt-20">
+            <div id="projects" className="mt-24">
                 <Projects />
             </div>
 
-            <div id="about" className="mt-20">
+            <div id="about" className="mt-24">
                 <About />
             </div>
 
-            <div id="contact" className="mt-20">
+            <div id="contact" className="mt-24">
                 <Contact />
             </div>
 

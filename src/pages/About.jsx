@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function About() {
   return (
-    <section className="relative py-24  overflow-hidden">
+    <section className="relative overflow-hidden p-4">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full -z-10" />
 

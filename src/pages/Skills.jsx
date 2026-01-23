@@ -37,7 +37,7 @@ export default function Skills() {
   ];
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative overflow-hidden p-4">
       {/* Background Decorative Blur */}
       <div className="absolute top-1/2 left-0 w-64 h-64 bg-emerald-500/10 blur-[100px] rounded-full pointer-events-none" />
 
