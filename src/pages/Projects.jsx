@@ -29,7 +29,7 @@ export default function Projects() {
   ];
 
   return (
-    <section className="relative w-full max-w-full md:w-11/12 mx-auto px-2 sm:px-4 md:p-4">
+    <section className="relative w-full md:w-11/12 mx-auto px-2 sm:px-4 md:p-4">
       {/* Background Ambient Glow */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 blur-[120px] pointer-events-none" />

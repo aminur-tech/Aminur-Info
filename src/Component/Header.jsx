@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { HiCode as Code, HiX } from "react-icons/hi";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,52 +57,39 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Right Side Drawer */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black z-40"
-            />
-
-            {/* Drawer */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="fixed top-0 right-0 h-full w-72 bg-slate-900 z-50 shadow-2xl"
-            >
-              {/* Close */}
-              <div className="flex justify-between items-center p-4 border-b border-slate-700">
-                <span className="text-white font-bold">Menu</span>
-                <button onClick={() => setIsOpen(false)} className="text-white text-xl">
-                  <HiX />
-                </button>
-              </div>
-
-              {/* Links */}
-              <ul className="flex flex-col gap-5 p-6">
-                {navLinks.map((link) => (
-                  <li key={link.id}>
-                    <button
-                      onClick={() => scrollToSection(link.id)}
-                      className="text-lg font-semibold text-slate-200 hover:text-emerald-400 transition"
-                    >
-                      {link.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Simple Mobile Drawer, no animation */}
+      {isOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          />
+          {/* Drawer */}
+          <div className="fixed top-0 right-0 h-full w-48 bg-slate-900 z-50 shadow-2xl flex flex-col">
+            {/* Close */}
+            <div className="flex justify-between items-center p-4 border-b border-slate-700">
+              <span className="text-white font-bold">Menu</span>
+              <button onClick={() => setIsOpen(false)} className="text-white text-xl">
+                <HiX />
+              </button>
+            </div>
+            {/* Links */}
+            <ul className="flex flex-col gap-5 p-6">
+              {navLinks.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => scrollToSection(link.id)}
+                    className="text-lg font-semibold text-slate-200 hover:text-emerald-400 transition"
+                  >
+                    {link.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
     </header>
   );
 }
