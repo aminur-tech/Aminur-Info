@@ -15,13 +15,13 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen text-white flex items-center overflow-hidden px-4 sm:px-6 lg:px-24 ">
+    <section className="relative min-h-screen text-white flex items-center overflow-x-hidden px-4 sm:px-6 lg:px-24">
       {/* --- Background Decorations --- */}
       <div className="absolute inset-0 opacity-[0.03]"
         style={{ backgroundImage: `linear-gradient(#22c55e 1px, transparent 1px), linear-gradient(90deg, #22c55e 1px, transparent 1px)`, bgSize: '45px 45px' }} />
 
-      <div className="absolute top-1/4 left-[-5%] w-[500px] h-[500px] bg-green-500/10 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-green-500/10 blur-[150px] rounded-full" />
+      <div className="absolute top-1/4 left-0 w-[90vw] max-w-[500px] h-[500px] bg-green-500/10 blur-[120px] rounded-full" />
+      <div className="absolute bottom-0 right-0 w-[90vw] max-w-[600px] h-[600px] bg-green-500/10 blur-[150px] rounded-full" />
 
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10 pt-10 md:pt-20 lg:pt-0">
 
