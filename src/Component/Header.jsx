@@ -1,34 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { HiCode as Code, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
-import {
-  HiCode as Code,
-  HiMenuAlt3 as Menu,
-  HiX as X,
-} from "react-icons/hi";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
-
-  // Close menu on route change
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
-
-  // Scroll background effect
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Lock body scroll on mobile menu
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
-    return () => (document.body.style.overflow = "auto");
-  }, [isOpen]);
 
   const navLinks = [
     { name: "Home", id: "hero" },
@@ -41,123 +16,92 @@ export default function Header() {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-
     setIsOpen(false);
-
     const yOffset = -80;
-    const y =
-      el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
   return (
-    <header
-      className={`sticky top-0 z-[100] transition-all duration-500 ${scrolled
-        ? "bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-4"
-        : "bg-transparent py-6"
-        }`}
-    >
-      <div className="w-full md:w-11/12 mx-auto">
-        <div className="flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md">
+      <div className="w-full md:w-11/12 mx-auto px-4 py-3 flex justify-between items-center">
+        
+        {/* Logo */}
+        <button onClick={() => scrollToSection("hero")} className="flex items-center gap-2">
+          <div className="p-2 bg-emerald-500 rounded-xl">
+            <Code className="h-5 w-5 text-slate-950" />
+          </div>
+          <span className="text-white font-black uppercase text-lg">
+            Aminur<span className="text-emerald-500">.</span>
+          </span>
+        </button>
 
-          {/* Logo */}
-          <Link
-            to="/"
-            onClick={() => scrollToSection("hero")}
-            className="flex items-center gap-2 text-lg font-black text-white"
-          >
-            <div className="p-2 bg-emerald-500 rounded-xl hover:rotate-12 transition">
-              <Code className="h-5 w-5 text-slate-950" />
-            </div>
-            <span className="uppercase">
-              Aminur<span className="text-emerald-500">.</span>
-            </span>
-          </Link>
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex gap-8">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => scrollToSection(link.id)}
+              className="text-sm uppercase tracking-widest font-bold text-slate-400 hover:text-emerald-400 transition"
+            >
+              {link.name}
+            </button>
+          ))}
+        </nav>
 
-          {/* Desktop Menu */}
-          <nav className="hidden lg:block">
-            <ul className="flex items-center gap-10">
-              {navLinks.map((link) => (
-                <li key={link.id}>
-                  <button
-                    onClick={() => scrollToSection(link.id)}
-                    className="relative text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-emerald-400 transition group"
-                  >
-                    {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-emerald-500 transition-all group-hover:w-full" />
-                  </button>
-                </li>
-              ))}
-              <li>
-                <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=aminur.programme@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-slate-400 font-bold hover:text-emerald-500 transition"
-                >
-                 Email Me
-                </a>
-
-              </li>
-            </ul>
-          </nav>
-
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 bg-slate-900/80 backdrop-blur border border-white/20 rounded-xl text-white"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(true)}
+          className="md:hidden text-white text-2xl"
+        >
+          ☰
+        </button>
       </div>
 
-      {/* Mobile Sidebar */}
+      {/* Right Side Drawer */}
       <AnimatePresence>
         {isOpen && (
-          <motion.nav
-            initial={{ opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 80 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-slate-950 border-l border-white/10 z-[101] lg:hidden"
-          >
-            <div className="flex flex-col h-full p-8">
-              <div className="flex justify-end mb-10">
-                <button onClick={() => setIsOpen(false)}>
-                  <X size={32} className="text-slate-400" />
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black z-40"
+            />
+
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="fixed top-0 right-0 h-full w-72 bg-slate-900 z-50 shadow-2xl"
+            >
+              {/* Close */}
+              <div className="flex justify-between items-center p-4 border-b border-slate-700">
+                <span className="text-white font-bold">Menu</span>
+                <button onClick={() => setIsOpen(false)} className="text-white text-xl">
+                  <HiX />
                 </button>
               </div>
 
-              <ul className="flex flex-col gap-8">
-                {navLinks.map((link, i) => (
-                  <motion.li
-                    key={link.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
+              {/* Links */}
+              <ul className="flex flex-col gap-5 p-6">
+                {navLinks.map((link) => (
+                  <li key={link.id}>
                     <button
                       onClick={() => scrollToSection(link.id)}
-                      className="text-4xl font-black uppercase text-white hover:text-emerald-500 transition"
+                      className="text-lg font-semibold text-slate-200 hover:text-emerald-400 transition"
                     >
                       {link.name}
                     </button>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
-
-              <div className="mt-auto border-t border-white/10 pt-6">
-                <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">
-                  Let’s collaborate
-                </p>
-                <p className="text-white font-bold">
-                  aminurrahman9793@gmail.com
-                </p>
-              </div>
-            </div>
-          </motion.nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

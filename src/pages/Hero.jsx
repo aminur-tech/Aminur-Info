@@ -15,7 +15,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen text-white flex items-center overflow-hidden px-6 lg:px-24 ">
+    <section className="relative min-h-screen text-white flex items-center overflow-hidden px-4 sm:px-6 lg:px-24 ">
       {/* --- Background Decorations --- */}
       <div className="absolute inset-0 opacity-[0.03]"
         style={{ backgroundImage: `linear-gradient(#22c55e 1px, transparent 1px), linear-gradient(90deg, #22c55e 1px, transparent 1px)`, bgSize: '45px 45px' }} />
@@ -23,7 +23,7 @@ const Hero = () => {
       <div className="absolute top-1/4 left-[-5%] w-[500px] h-[500px] bg-green-500/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-green-500/10 blur-[150px] rounded-full" />
 
-      <div className="container mx-auto grid lg:grid-cols-2 gap-10 items-center z-10 pt-20 lg:pt-0">
+      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10 pt-10 md:pt-20 lg:pt-0">
 
         {/* --- Left Side Content --- */}
         <motion.div
@@ -40,13 +40,13 @@ const Hero = () => {
           </motion.div>
 
           <motion.div variants={fadeInUp} className="space-y-2">
-            <h2 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9]">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[0.9]">
               I'm <span className="text-green-500">Aminur</span>
             </h2>
-            <h2 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9]">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[0.9]">
               Rahman
             </h2>
-            <div className="text-2xl md:text-4xl font-bold text-gray-200 pt-4">
+            <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-gray-200 pt-4">
               <TypeAnimation
                 sequence={['Full Stack Web Developer', 2000, 'MERN Stack Developer', 2000]}
                 repeat={Infinity}
@@ -54,12 +54,12 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          <motion.p variants={fadeInUp} className="text-gray-400 max-w-lg leading-relaxed text-lg italic border-l-2 border-green-500/20 pl-6">
+          <motion.p variants={fadeInUp} className="text-gray-400 max-w-lg leading-relaxed text-base sm:text-lg italic border-l-2 border-green-500/20 pl-4 sm:pl-6">
             Focused on building high-performance web applications using the MERN stack.
             I bridge the gap between clean code and user-centric design.
           </motion.p>
 
-          <motion.div variants={fadeInUp} className="flex flex-wrap gap-5 pt-4">
+          <motion.div variants={fadeInUp} className="flex flex-wrap gap-3 sm:gap-5 pt-4">
             {/* --- Resume Download Button --- */}
             <motion.a
               href="/Aminur.pdf" 
@@ -81,7 +81,7 @@ const Hero = () => {
             </motion.a>
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="flex gap-8 text-2xl text-gray-500">
+          <motion.div variants={fadeInUp} className="flex gap-5 sm:gap-8 text-xl sm:text-2xl text-gray-500">
             {/* GitHub */}
             <a
               href="https://github.com/aminur-tech"
@@ -120,7 +120,7 @@ const Hero = () => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
-          className="relative flex justify-center lg:justify-end items-end h-full"
+          className="relative flex justify-center lg:justify-end items-end h-full mt-10 md:mt-0"
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] 
                   bg-green-500/30 blur-[80px] rounded-full z-0 opacity-60" />
@@ -128,7 +128,7 @@ const Hero = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] border border-green-500/5 rounded-full" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border border-green-500/10 rounded-full animate-pulse" />
 
-          <div className="relative z-10 w-full max-w-[500px] lg:max-w-[550px]"
+          <div className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[550px]"
             style={{
               maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
               WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
@@ -147,7 +147,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
         <span className="text-[10px] uppercase tracking-[0.5em] text-gray-500 font-bold mb-1">

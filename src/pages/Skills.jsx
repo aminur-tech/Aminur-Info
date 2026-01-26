@@ -37,16 +37,16 @@ export default function Skills() {
   ];
 
   return (
-    <section className="relative overflow-hidden p-4">
+    <section className="relative overflow-hidden p-2 sm:p-4">
       {/* Background Decorative Blur */}
       <div className="absolute top-1/2 left-0 w-64 h-64 bg-emerald-500/10 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="w-full md:w-11/12 mx-auto px-2 md:p-4">
+      <div className="w-full md:w-11/12 mx-auto px-2 sm:px-4 md:p-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-16"
         >
           <div className="flex items-center justify-center gap-2 mb-4">
              <div className="h-[1px] w-8 bg-emerald-500/50"></div>
@@ -59,7 +59,7 @@ export default function Skills() {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
           {coreSkills.map((skill, index) => (
             <SkillCard 
               key={index} 
@@ -75,7 +75,7 @@ export default function Skills() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-center mt-12 text-slate-500 font-mono text-sm"
+          className="text-center mt-8 sm:mt-12 text-slate-500 font-mono text-xs sm:text-sm"
         >
           &lt; constantly evolving /&gt;
         </motion.p>
