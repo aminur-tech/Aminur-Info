@@ -4,31 +4,32 @@ import { motion } from 'framer-motion';
 
 export default function Projects() {
   const projects = [
+    
+    {
+      title: 'Digital-Life-Lessons',
+      description: 'Digital Life Lessons is a platform where users can create, store, and share meaningful life lessons, personal growth insights, and wisdom. Users can organize lessons, mark favorites, track learning progress, and browse public lessons shared by others. Built with React, Tailwind CSS, Firebase Auth, Node.js, Express.js, and MongoDB.',
+      link: 'https://digital-life-lessons-seven.vercel.app',
+      tags: ['React', 'Node.js',"javascript", 'MongoDB'],
+      accent: 'from-emerald-500 to-teal-400'
+    },
     {
       title: 'PlateShare',
       description: 'Community-driven food-sharing platform to reduce food waste and help the needy. Built with React, Tailwind CSS, Firebase Auth, Node.js, Express.js, and MongoDB.',
       link: 'https://plate-share-client-olive.vercel.app',
-      tags: ['React', 'Node.js', 'MongoDB'],
+      tags: ['React', 'Node.js',"javascript", 'MongoDB'],
       accent: 'from-emerald-500 to-teal-400'
     },
     {
-      title: 'Pet Care Services',
-      description: 'Responsive web app to help pet owners access winter-specific pet services such as grooming, health checkups, and seasonal care tips.',
-      link: 'https://pet-care-services.netlify.app',
-      tags: ['Firebase', 'React', 'Tailwind'],
-      accent: 'from-blue-500 to-indigo-400'
+      title: 'Hero Kidz',
+      description: "Hero Kidz is a modern, single-vendor e-commerce web application built with Next.js. It is designed for selling children's products and toys online, providing a seamless shopping experience for users.",
+      link: 'https://hero-kidz-six.vercel.app',
+      tags: ['Next.js', 'NextAuth.js', "javascript", 'MongoDB'],
+      accent: 'from-emerald-500 to-teal-400'
     },
-    {
-      title: 'Zab Shift Client',
-      description: 'Modern React-based delivery management web application with role-based dashboards, parcel tracking, and Stripe payments.',
-      link: 'https://zap-shift-client-woad.vercel.app',
-      tags: ['Stripe', 'Dashboard', 'Vercel'],
-      accent: 'from-cyan-500 to-blue-400'
-    }
   ];
 
   return (
-    <section className="relative">
+    <section className="relative w-full md:w-11/12 mx-auto px-2 md:p-4">
       {/* Background Ambient Glow */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 blur-[120px] pointer-events-none" />

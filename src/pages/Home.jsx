@@ -7,7 +7,7 @@ import Skills from "./Skills";
 
 export default function Home() {
     return (
-        <section className=" max-w-7xl mx-auto">
+        <section >
             <title>Aminur Rahman</title>
             {/* <CustomCursor/> */}
             {/* HERO SECTION */}

@@ -58,7 +58,7 @@ export default function Header() {
         : "bg-transparent py-6"
         }`}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full md:w-11/12 mx-auto">
         <div className="flex items-center justify-between">
 
           {/* Logo */}

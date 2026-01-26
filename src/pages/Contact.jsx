@@ -35,7 +35,7 @@ export default function Contact() {
             {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-emerald-500/5 blur-[120px] pointer-events-none" />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="w-full md:w-11/12 mx-auto px-2 md:p-4 relative z-10">
                 
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}

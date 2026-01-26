@@ -1,137 +1,168 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Terminal, Code2, Cpu } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from 'react-icons/fa';
+import { TypeAnimation } from 'react-type-animation';
 
 const Hero = () => {
-  const scrollToProjects = () => {
-    const section = document.getElementById("projects");
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
   };
 
   return (
-    <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden">
-     
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full" />
-      </div>
-      
-      <div className="container mx-auto p-8 z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          
-          {/* LEFT CONTENT */}
-          <div className="lg:w-3/5 text-center lg:text-left space-y-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-emerald-500/30 text-emerald-400 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase"
-            >
-              <Terminal size={14} />
-              Junior Full-Stack Engineer
-            </motion.div>
+    <section className="relative min-h-screen text-white flex items-center overflow-hidden px-6 lg:px-24 ">
+      {/* --- Background Decorations --- */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{ backgroundImage: `linear-gradient(#22c55e 1px, transparent 1px), linear-gradient(90deg, #22c55e 1px, transparent 1px)`, bgSize: '45px 45px' }} />
 
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter text-white uppercase"
-            >
-              Architecting <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-500">
-                Future-Ready
-              </span> <br /> 
-              Solutions.
-            </motion.h1>
+      <div className="absolute top-1/4 left-[-5%] w-[500px] h-[500px] bg-green-500/10 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-green-500/10 blur-[150px] rounded-full" />
 
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="max-w-xl mx-auto lg:mx-0 text-slate-400 text-lg md:text-xl font-light leading-relaxed"
-            >
-              Hi, I'm <span className="text-white font-semibold">Aminur Rahman</span>. I don't just write code; I build digital products that solve real-world problems using the <span className="text-emerald-400">MERN Stack</span>.
-            </motion.p>
+      <div className="container mx-auto grid lg:grid-cols-2 gap-10 items-center z-10 pt-20 lg:pt-0">
 
-           
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap justify-center lg:justify-start gap-4 text-slate-500"
-            >
-              <div className="flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-white/5">
-                <Code2 size={16} className="text-emerald-500" /> <span className="text-xs font-mono">React/Next.js</span>
-              </div>
-              <div className="flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-white/5">
-                <Cpu size={16} className="text-blue-500" /> <span className="text-xs font-mono">Node/Express</span>
-              </div>
-              <div className="flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-white/5">
-                <Sparkles size={16} className="text-amber-500" /> <span className="text-xs font-mono">MongoDB</span>
-              </div>
-            </motion.div>
+        {/* --- Left Side Content --- */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="space-y-6 lg:space-y-8"
+        >
+          <motion.div variants={fadeInUp} className="flex items-center gap-3">
+            <span className="h-[2px] w-10 bg-green-500 rounded-full"></span>
+            <h1 className="text-green-500 font-mono tracking-[0.3em] text-xs md:text-sm uppercase font-bold">
+              Available for Hire
+            </h1>
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-5 pt-4"
-            >
-              <button
-                onClick={scrollToProjects}
-                className="group relative inline-flex items-center gap-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-4 px-10 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
-              >
-                <span className="uppercase tracking-tighter">Explore Projects</span>
-                <ArrowRight className="group-hover:translate-x-2 transition-transform" size={20} />
-              </button>
-              
-              <a 
-                href="#contact"
-                className="text-white font-bold py-4 px-8 rounded-2xl border border-white/10 hover:bg-white/5 transition-all uppercase text-xs tracking-[0.2em]"
-              >
-                Start a Conversation
-              </a>
-            </motion.div>
-          </div>
-
-          {/* RIGHT SIDE IMAGE (BENTO-STYLE FRAME) */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            className="lg:w-2/5 relative"
-          >
-            <div className="relative w-72 h-[450px] md:w-96 md:h-[550px] bg-slate-900 rounded-[3.5rem] p-3 border border-emerald-500/20 shadow-2xl overflow-hidden group">
-              <div 
-                className="w-full h-full bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-1000 rounded-[3rem]"
-                style={{ backgroundImage: `url('https://i.ibb.co.com/gMxQc4vH/profile.jpg')` }}
-              >
-                {/* Status Badge */}
-                <div className="absolute top-8 left-8 bg-black/60 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                    <span className="text-[10px] text-white font-bold uppercase tracking-widest">Live in Dhaka</span>
-                  </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 w-full p-10 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent">
-                  <h2 className="text-white text-3xl font-black leading-none">AMINUR<br/>RAHMAN</h2>
-                  <div className="mt-4 flex gap-2">
-                    <span className="w-8 h-1 bg-emerald-500 rounded-full" />
-                    <span className="w-2 h-1 bg-emerald-500/30 rounded-full" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating Decorative Box */}
-            <div className="absolute -bottom-6 -left-6 md:-bottom-10 md:-left-10 bg-slate-900 border border-white/10 p-6 rounded-[2rem] shadow-2xl hidden md:block animate-bounce-slow">
-               <p className="text-emerald-500 text-2xl font-black">10+</p>
-               <p className="text-slate-400 text-[10px] uppercase font-bold tracking-tighter">Completed Projects</p>
+          <motion.div variants={fadeInUp} className="space-y-2">
+            <h2 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9]">
+              I'm <span className="text-green-500">Aminur</span>
+            </h2>
+            <h2 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9]">
+              Rahman
+            </h2>
+            <div className="text-2xl md:text-4xl font-bold text-gray-200 pt-4">
+              <TypeAnimation
+                sequence={['Full Stack Web Developer', 2000, 'MERN Stack Developer', 2000]}
+                repeat={Infinity}
+              />
             </div>
           </motion.div>
 
-        </div>
+          <motion.p variants={fadeInUp} className="text-gray-400 max-w-lg leading-relaxed text-lg italic border-l-2 border-green-500/20 pl-6">
+            Focused on building high-performance web applications using the MERN stack.
+            I bridge the gap between clean code and user-centric design.
+          </motion.p>
+
+          <motion.div variants={fadeInUp} className="flex flex-wrap gap-5 pt-4">
+            {/* --- Resume Download Button --- */}
+            <motion.a
+              href="/Aminur.pdf" 
+              download="Aminur_Rahman_Resume.pdf"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 bg-green-600 hover:bg-green-500 text-[#020617] font-bold py-4 px-10 rounded-xl transition-all shadow-[0_10px_30px_rgba(34,197,94,0.3)] cursor-pointer"
+            >
+              Get Resume <FaDownload size={16} />
+            </motion.a>
+
+            <motion.a
+              href="#contact"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="border-2 border-green-500/30 hover:border-green-500 py-4 px-10 rounded-xl transition-all text-green-500 font-bold bg-green-500/5 backdrop-blur-sm cursor-pointer"
+            >
+              Contact Me
+            </motion.a>
+          </motion.div>
+
+          <motion.div variants={fadeInUp} className="flex gap-8 text-2xl text-gray-500">
+            {/* GitHub */}
+            <a
+              href="https://github.com/aminur-tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="GitHub Profile"
+              className="hover:text-green-500 transition-all hover:-translate-y-1 shadow-green-500/20 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+            >
+              <FaGithub />
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/in/aminur-rahman4078"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="LinkedIn Profile"
+              className="hover:text-green-500 transition-all hover:-translate-y-1 shadow-green-500/20 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+            >
+              <FaLinkedin />
+            </a>
+
+            {/* Email (Mailto) */}
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=aminur.programme@gmail.com"
+              title="Send Email"
+              className="hover:text-green-500 transition-all hover:-translate-y-1 shadow-green-500/20 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+            >
+              <FaEnvelope />
+            </a>
+          </motion.div>
+        </motion.div>
+
+        {/* --- Right Side: Image --- */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+          className="relative flex justify-center lg:justify-end items-end h-full"
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] 
+                  bg-green-500/30 blur-[80px] rounded-full z-0 opacity-60" />
+
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] border border-green-500/5 rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border border-green-500/10 rounded-full animate-pulse" />
+
+          <div className="relative z-10 w-full max-w-[500px] lg:max-w-[550px]"
+            style={{
+              maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+            }}>
+            <img
+              src="https://i.ibb.co.com/h1nS5dhr/profile-removebg-preview.png"
+              alt="Aminur Rahman"
+              className="w-full h-auto filter brightness-110 contrast-[1.05]"
+            />
+          </div>
+        </motion.div>
       </div>
+
+      {/* Scroll Down Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+      >
+        <span className="text-[10px] uppercase tracking-[0.5em] text-gray-500 font-bold mb-1">
+          Scroll Down
+        </span>
+        <motion.div
+          animate={{ y: [0, 8, 0], opacity: [0.4, 1, 0.4] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          className="flex flex-col items-center justify-center"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+          </svg>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
