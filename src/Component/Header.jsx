@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { HiCode as Code, HiX } from "react-icons/hi";
+import { HiCode as Code,  HiX } from "react-icons/hi";
+import { HiOutlineBars3 } from "react-icons/hi2";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ export default function Header() {
           onClick={() => setIsOpen(true)}
           className="md:hidden text-white text-2xl"
         >
-          ☰
+        <HiOutlineBars3 />
         </button>
       </div>
 
@@ -63,19 +64,19 @@ export default function Header() {
           {/* Overlay */}
           <div
             onClick={() => setIsOpen(false)}
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            className="fixed inset-0 z-40"
           />
           {/* Drawer */}
-          <div className="fixed top-0 right-0 h-full w-48 bg-slate-900 z-50 shadow-2xl flex flex-col">
+          <div className="fixed top-0 right-0 h-full w-48 z-50 shadow-2xl flex flex-col">
             {/* Close */}
-            <div className="flex justify-between items-center p-4 border-b border-slate-700">
+            <div className="flex justify-between items-center p-4 border-b ">
               <span className="text-white font-bold">Menu</span>
-              <button onClick={() => setIsOpen(false)} className="text-white text-xl">
+              <button onClick={() => setIsOpen(false)} className="text-white bg-black p-1 text-xl">
                 <HiX />
               </button>
             </div>
             {/* Links */}
-            <ul className="flex flex-col gap-5 p-6">
+            <ul className="flex flex-col gap-5 p-6 bg-gray-900 opacity-90 shadow-2xl rounded-2xl text-white">
               {navLinks.map((link) => (
                 <li key={link.id}>
                   <button
