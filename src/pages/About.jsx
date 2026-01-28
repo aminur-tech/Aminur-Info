@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function About() {
   return (
-    <section className="relative overflow-hidden py-8">
+    <section className="relative overflow-hidden py-8 px-1">
       {/* --- Abstract Background Decor --- */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-600/10 blur-[150px] rounded-full -z-10 animate-pulse" />
       <div className="absolute bottom-0 left-[-10%] w-[400px] h-[400px] bg-blue-600/5 blur-[120px] rounded-full -z-10" />
