@@ -21,7 +21,7 @@ export default function FloatingContact() {
     <motion.div
       initial="hidden"
       animate="visible"
-      className="fixed right-4 bottom-6 z-50 flex flex-col gap-4"
+      className="fixed right-4 bottom-6 z-50 flex flex-col gap-4 overflow-x-hidden"
     >
       {/* WhatsApp */}
       <motion.a
