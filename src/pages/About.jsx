@@ -3,6 +3,16 @@ import { User, Target, Rocket, Award, Code2, Cpu } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function About() {
+  const scrollToSection = (id) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const yOffset = -80; // adjust for fixed header
+  const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+  window.scrollTo({ top: y, behavior: "smooth" });
+};
+
   return (
     <section className="relative overflow-hidden py-8 px-1">
       {/* --- Abstract Background Decor --- */}
@@ -93,11 +103,12 @@ export default function About() {
             {/* Action CTA */}
             <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8 pt-4">
               <motion.button 
+               onClick={() => scrollToSection("projects")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-6 sm:px-10 py-3 sm:py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black uppercase tracking-widest text-xs rounded-full shadow-[0_10px_30px_rgba(16,185,129,0.2)] transition-all"
               >
-                Download Portfolio
+                view my work
               </motion.button>
               
               <div className="flex items-center gap-4 group cursor-pointer">
