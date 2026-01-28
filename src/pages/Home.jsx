@@ -1,4 +1,5 @@
 import CustomCursor from "../Component/CustomCursor";
+import FloatingContact from "../Component/FloatingContact";
 import About from "./About";
 import Contact from "./Contact";
 import Hero from "./Hero";
@@ -9,7 +10,7 @@ export default function Home() {
     return (
         <section >
             <title>Aminur Rahman</title>
-            {/* <CustomCursor/> */}
+            <CustomCursor/>
             {/* HERO SECTION */}
             <div id="hero">
                 <Hero></Hero>
@@ -31,6 +32,7 @@ export default function Home() {
                 <Contact />
             </div>
 
+            <FloatingContact />
         </section>
     )
 }

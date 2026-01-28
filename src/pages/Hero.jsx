@@ -34,7 +34,7 @@ const Hero = () => {
         >
           <motion.div variants={fadeInUp} className="flex items-center gap-3">
             <span className="h-[2px] w-10 bg-green-500 rounded-full"></span>
-            <h1 className="text-green-500 font-mono tracking-[0.3em] text-xs md:text-sm uppercase font-bold">
+            <h1 className="text-green-500  tracking-[0.3em] text-xs md:text-sm uppercase font-bold">
               Available for Hire
             </h1>
           </motion.div>
