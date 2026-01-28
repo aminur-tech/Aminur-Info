@@ -30,15 +30,20 @@ const Hero = () => {
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="space-y-6 lg:space-y-8"
+          className="space-y-6 lg:space-y-8 text-center lg:text-left"
         >
-          <motion.div variants={fadeInUp} className="flex items-center gap-3">
+          {/* ---- AVAILABLE FOR HIRE ---- */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex items-center gap-3 justify-center lg:justify-start"
+          >
             <span className="h-[2px] w-10 bg-green-500 rounded-full"></span>
-            <h1 className="text-green-500  tracking-[0.3em] text-xs md:text-sm uppercase font-bold">
+            <h1 className="text-green-500 tracking-[0.3em] text-xs md:text-sm uppercase font-bold">
               Available for Hire
             </h1>
           </motion.div>
 
+          {/* ---- NAME + TITLE ---- */}
           <motion.div variants={fadeInUp} className="space-y-2">
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[0.9]">
               I'm <span className="text-green-500">Aminur</span>
@@ -46,27 +51,50 @@ const Hero = () => {
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[0.9]">
               Rahman
             </h2>
+
             <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-gray-200 pt-4">
               <TypeAnimation
-                sequence={['Full Stack Web Developer', 2000, 'MERN Stack Developer', 2000]}
+                sequence={[
+                  "Full Stack Web Developer",
+                  2000,
+                  "MERN Stack Developer",
+                  2000
+                ]}
                 repeat={Infinity}
               />
             </div>
           </motion.div>
 
-          <motion.p variants={fadeInUp} className="text-gray-400 max-w-lg leading-relaxed text-base sm:text-lg italic border-l-2 border-green-500/20 pl-4 sm:pl-6">
+          {/* ---- DESCRIPTION ---- */}
+          <motion.p
+            variants={fadeInUp}
+            className="
+      text-gray-400
+      max-w-lg
+      mx-auto lg:mx-0
+      leading-relaxed
+      text-base sm:text-lg
+      italic
+      border-t-2 lg:border-t-0 lg:border-l-2
+      border-green-500/20
+      pt-4 lg:pt-0 lg:pl-6
+    "
+          >
             Focused on building high-performance web applications using the MERN stack.
             I bridge the gap between clean code and user-centric design.
           </motion.p>
 
-          <motion.div variants={fadeInUp} className="flex flex-wrap gap-3 sm:gap-5 pt-4">
-            {/* --- Resume Download Button --- */}
+          {/* ---- CTA BUTTONS ---- */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex flex-wrap gap-3 sm:gap-5 pt-4 justify-center lg:justify-start"
+          >
             <motion.a
-              href="/Aminur.pdf" 
+              href="/Aminur.pdf"
               download="Aminur_Rahman_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 bg-green-600 hover:bg-green-500 text-[#020617] font-bold py-4 px-10 rounded-xl transition-all shadow-[0_10px_30px_rgba(34,197,94,0.3)] cursor-pointer"
+              className="flex items-center gap-3 bg-green-600 hover:bg-green-500 text-[#020617] font-bold py-4 px-10 rounded-xl transition-all shadow-[0_10px_30px_rgba(34,197,94,0.3)]"
             >
               Get Resume <FaDownload size={16} />
             </motion.a>
@@ -75,45 +103,44 @@ const Hero = () => {
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="border-2 border-green-500/30 hover:border-green-500 py-4 px-10 rounded-xl transition-all text-green-500 font-bold bg-green-500/5 backdrop-blur-sm cursor-pointer"
+              className="border-2 border-green-500/30 hover:border-green-500 py-4 px-10 rounded-xl transition-all text-green-500 font-bold bg-green-500/5 backdrop-blur-sm"
             >
               Contact Me
             </motion.a>
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="flex gap-5 sm:gap-8 text-xl sm:text-2xl text-gray-500">
-            {/* GitHub */}
+          {/* ---- SOCIAL ICONS ---- */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex gap-5 sm:gap-8 text-xl sm:text-2xl text-gray-500 justify-center lg:justify-start"
+          >
             <a
               href="https://github.com/aminur-tech"
               target="_blank"
               rel="noopener noreferrer"
-              title="GitHub Profile"
-              className="hover:text-green-500 transition-all hover:-translate-y-1 shadow-green-500/20 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+              className="hover:text-green-500 transition-all hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
             >
               <FaGithub />
             </a>
 
-            {/* LinkedIn */}
             <a
               href="https://www.linkedin.com/in/aminur-rahman4078"
               target="_blank"
               rel="noopener noreferrer"
-              title="LinkedIn Profile"
-              className="hover:text-green-500 transition-all hover:-translate-y-1 shadow-green-500/20 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+              className="hover:text-green-500 transition-all hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
             >
               <FaLinkedin />
             </a>
 
-            {/* Email (Mailto) */}
             <a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=aminur.programme@gmail.com"
-              title="Send Email"
-              className="hover:text-green-500 transition-all hover:-translate-y-1 shadow-green-500/20 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+              className="hover:text-green-500 transition-all hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
             >
               <FaEnvelope />
             </a>
           </motion.div>
         </motion.div>
+
 
         {/* --- Right Side: Image --- */}
         <motion.div
