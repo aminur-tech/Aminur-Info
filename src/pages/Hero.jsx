@@ -32,7 +32,7 @@ const Hero = () => {
           animate="visible"
           className="space-y-6 lg:space-y-8 text-center lg:text-left"
         >
-          {/* ---- AVAILABLE FOR HIRE ---- */}
+          {/* Available for Hire */}
           <motion.div
             variants={fadeInUp}
             className="flex items-center gap-3 justify-center lg:justify-start"
@@ -43,7 +43,7 @@ const Hero = () => {
             </h1>
           </motion.div>
 
-          {/* ---- NAME + TITLE ---- */}
+          {/* Name & Role */}
           <motion.div variants={fadeInUp} className="space-y-2">
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[0.9]">
               I'm <span className="text-green-500">Aminur</span>
@@ -55,46 +55,49 @@ const Hero = () => {
             <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-gray-200 pt-4">
               <TypeAnimation
                 sequence={[
-                  "Full Stack Web Developer",
-                  2000,
-                  "MERN Stack Developer",
-                  2000
+                  'Full Stack Web Developer', 2000,
+                  'MERN Stack Developer', 2000
                 ]}
                 repeat={Infinity}
               />
             </div>
           </motion.div>
 
-          {/* ---- DESCRIPTION ---- */}
+          {/* Description */}
           <motion.p
             variants={fadeInUp}
             className="
-      text-gray-400
-      max-w-lg
-      mx-auto lg:mx-0
-      leading-relaxed
-      text-base sm:text-lg
-      italic
-      border-t-2 lg:border-t-0 lg:border-l-2
+      text-gray-400 max-w-lg mx-auto lg:mx-0
+      leading-relaxed text-base sm:text-lg italic
+      border-l-0 lg:border-l-2
       border-green-500/20
-      pt-4 lg:pt-0 lg:pl-6
+      pl-0 lg:pl-6
     "
           >
             Focused on building high-performance web applications using the MERN stack.
             I bridge the gap between clean code and user-centric design.
           </motion.p>
 
-          {/* ---- CTA BUTTONS ---- */}
+          {/* Buttons */}
           <motion.div
             variants={fadeInUp}
-            className="flex flex-wrap gap-3 sm:gap-5 pt-4 justify-center lg:justify-start"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-5 pt-4 items-center lg:items-start"
           >
             <motion.a
               href="/Aminur.pdf"
               download="Aminur_Rahman_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 bg-green-600 hover:bg-green-500 text-[#020617] font-bold py-4 px-10 rounded-xl transition-all shadow-[0_10px_30px_rgba(34,197,94,0.3)]"
+              className="
+        flex items-center justify-center gap-3
+        bg-green-600 hover:bg-green-500
+        text-[#020617] font-bold
+        py-4 px-10 rounded-xl
+        transition-all
+        shadow-[0_10px_30px_rgba(34,197,94,0.3)]
+        cursor-pointer
+        w-full sm:w-auto
+      "
             >
               Get Resume <FaDownload size={16} />
             </motion.a>
@@ -103,13 +106,22 @@ const Hero = () => {
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="border-2 border-green-500/30 hover:border-green-500 py-4 px-10 rounded-xl transition-all text-green-500 font-bold bg-green-500/5 backdrop-blur-sm"
+              className="
+        border-2 border-green-500/30 hover:border-green-500
+        py-4 px-10 rounded-xl
+        transition-all
+        text-green-500 font-bold
+        bg-green-500/5 backdrop-blur-sm
+        cursor-pointer
+        w-full sm:w-auto
+        text-center
+      "
             >
               Contact Me
             </motion.a>
           </motion.div>
 
-          {/* ---- SOCIAL ICONS ---- */}
+          {/* Social Icons */}
           <motion.div
             variants={fadeInUp}
             className="flex gap-5 sm:gap-8 text-xl sm:text-2xl text-gray-500 justify-center lg:justify-start"
@@ -118,7 +130,7 @@ const Hero = () => {
               href="https://github.com/aminur-tech"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-green-500 transition-all hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+              className="hover:text-green-500 transition-all hover:-translate-y-1"
             >
               <FaGithub />
             </a>
@@ -127,14 +139,14 @@ const Hero = () => {
               href="https://www.linkedin.com/in/aminur-rahman4078"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-green-500 transition-all hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+              className="hover:text-green-500 transition-all hover:-translate-y-1"
             >
               <FaLinkedin />
             </a>
 
             <a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=aminur.programme@gmail.com"
-              className="hover:text-green-500 transition-all hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+              className="hover:text-green-500 transition-all hover:-translate-y-1"
             >
               <FaEnvelope />
             </a>
