@@ -84,7 +84,7 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-3 sm:gap-5 pt-4 items-center lg:items-start"
           >
             <motion.a
-              href="/Aminur.pdf"
+              href="/MERN.pdf"
               download="Aminur_Rahman_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
