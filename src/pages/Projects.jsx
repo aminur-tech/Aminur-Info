@@ -54,14 +54,14 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="md:sticky md:top-28 w-full group"
+            className="sticky top-28 w-full group"
           >
-            {/* FIX 3: Added overflow-hidden to the card itself */}
+            {/* Added overflow-hidden to the card itself */}
             <div className="relative overflow-hidden bg-slate-900/40 backdrop-blur-2xl border border-white/5 rounded-3xl md:rounded-[4rem] p-6 sm:p-8 md:p-16 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 group-hover:border-emerald-500/30">
               
               <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-5 transition-opacity duration-700`} />
 
-              {/* FIX 4: Adjusted background number positioning and size for mobile */}
+              {/* Adjusted background number positioning and size for mobile */}
               <span className="absolute -right-4 -bottom-4 md:-right-6 md:-bottom-10 text-[6rem] sm:text-[12rem] md:text-[20rem] font-black text-white/[0.015] leading-none select-none group-hover:text-emerald-500/[0.03] transition-colors duration-700">
                 0{index + 1}
               </span>
