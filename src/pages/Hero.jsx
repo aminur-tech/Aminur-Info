@@ -15,18 +15,18 @@ const Hero = () => {
   };
 
   return (
-    // FIX 1: Added overflow-clip as a backup to overflow-x-hidden
+    //  Added overflow-clip as a backup to overflow-x-hidden
     <section className="relative min-h-screen text-white flex items-center overflow-x-hidden overflow-y-hidden px-4 sm:px-6 lg:px-24">
       
       {/* --- Background Decorations --- */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{ backgroundImage: `linear-gradient(#22c55e 1px, transparent 1px), linear-gradient(90deg, #22c55e 1px, transparent 1px)`, backgroundSize: '45px 45px' }} />
 
-      {/* FIX 2: Changed w-[90vw] to w-full and added max-w-sm/md to prevent edge bleed */}
+     
       <div className="absolute top-1/4 left-0 w-full max-w-sm h-[400px] bg-green-500/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-full max-w-md h-[500px] bg-green-500/10 blur-[150px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10 pt-10 md:pt-20 lg:pt-0">
+      <div className="container mx-auto flex flex-col-reverse lg:grid lg:grid-cols-2 gap-10 items-center z-10 pt-10 md:pt-20 lg:pt-0">
 
         {/* --- Left Side Content --- */}
         <motion.div
@@ -121,7 +121,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 md:flex flex-col items-center gap-2 cursor-pointer z-20 hidden"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
         <span className="text-[10px] uppercase tracking-[0.5em] text-gray-500 font-bold mb-1">Scroll Down</span>
