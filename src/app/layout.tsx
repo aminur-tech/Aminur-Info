@@ -1,9 +1,10 @@
 import React from "react";
 import "./globals.css";
-import Navbar from "../component/header/Navbar";
-import Footer from "../component/footer/Footer";
-import { ThemeProvider } from "../component/providers/theme-provider";
-import SmoothScroll from "../component/buttons/SmoothScroll";
+import SmoothScroll from "../Component/buttons/SmoothScroll";
+import { ThemeProvider } from "../Component/providers/theme-provider";
+import Navbar from "../Component/header/Navbar";
+import Footer from "../Component/footer/Footer";
+
 
 export default function RootLayout({
   children,

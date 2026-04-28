@@ -1,14 +1,15 @@
-import CustomCursor from "../component/buttons/CustomCursor";
-import FloatingContact from "../component/buttons/FloatingContact";
-import Projects from "../component/home/Projects";
-import Skills from "../component/home/Skills";
-import Hero from "../component/home/Hero";
-import About from "../component/home/About";
-import Contact from "../component/home/Contact";
-import ScrollToTopButton from "../component/buttons/ScrollToTopButton";
-import Education from "../component/home/Education";
-import Certifications from "../component/home/Certifications";
-import FAQSection from "../component/home/FAQSection";
+import CustomCursor from "../Component/buttons/CustomCursor";
+import FloatingContact from "../Component/buttons/FloatingContact";
+import ScrollToTopButton from "../Component/buttons/ScrollToTopButton";
+import About from "../Component/home/About";
+import Certifications from "../Component/home/Certifications";
+import Contact from "../Component/home/Contact";
+import Education from "../Component/home/Education";
+import FAQSection from "../Component/home/FAQSection";
+import Hero from "../Component/home/Hero";
+import Projects from "../Component/home/Projects";
+import Skills from "../Component/home/Skills";
+
 
 
 export const metadata = {
@@ -45,7 +46,7 @@ export default function HomePage() {
         <Certifications/>
       </div>
       <div id="faq" className="mt-24 mb-24">
-        <FAQSection />
+        <FAQSection/>
       </div>
 
       <div id="contact" className="mt-24 mb-24">
