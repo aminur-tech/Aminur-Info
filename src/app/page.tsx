@@ -1,62 +1,30 @@
-import CustomCursor from "../Component/buttons/CustomCursor";
-import FloatingContact from "../Component/buttons/FloatingContact";
-import ScrollToTopButton from "../Component/buttons/ScrollToTopButton";
-import About from "../Component/home/About";
-import Certifications from "../Component/home/Certifications";
-import Contact from "../Component/home/Contact";
-import Education from "../Component/home/Education";
-import FAQSection from "../Component/home/FAQSection";
-import Hero from "../Component/home/Hero";
-import Projects from "../Component/home/Projects";
-import Skills from "../Component/home/Skills";
+import Contact from "../components/home/Contact";
+import PremiumPortfolio from "../components/home/PremiumPortfolio";
+import { getApprovedTestimonials, getHero, getProfile, getPublishedAbout, getPublishedCertifications, getPublishedEducation, getPublishedExperience, getPublishedProjects, getPublishedRoles, getPublishedServices, getPublishedSkills, getPublishedSocialLinks, getSeoSettings, getSiteSettings } from "../lib/queries/portfolio";
 
 
 
-export const metadata = {
-  title: "Aminur Rahman - Portfolio",
-  description: "A modern, fast, and SEO-optimized portfolio built with Next.js 16 and TypeScript.",
-};
+export async function generateMetadata() {
+  const seo = await getSeoSettings();
+  return { title: seo?.title || "Aminur Rahman | Full-stack developer", description: seo?.description || "Aminur Rahman builds focused, reliable web products with thoughtful UX and production-ready engineering.", keywords: seo?.keywords, openGraph: { title: seo?.og_title || seo?.title, description: seo?.og_description || seo?.description, images: seo?.og_image ? [seo.og_image] : undefined }, alternates: seo?.canonical_url ? { canonical: seo.canonical_url } : undefined, robots: seo?.allow_indexing === false ? { index: false, follow: false } : undefined };
+}
 
-export default function HomePage() {
-  return (
-    <main>
-      <CustomCursor />
-      {/* HERO SECTION */}
-      <div id="hero">
-        <Hero></Hero>
-      </div>
+export default async function HomePage() {
+  const [profile, hero, projects, skills, testimonials, certifications, about, roles, experience, education, services, socialLinks, siteSettings] = await Promise.all([
+    getProfile(),
+    getHero(),
+    getPublishedProjects(),
+    getPublishedSkills(),
+    getApprovedTestimonials(),
+    getPublishedCertifications(),
+    getPublishedAbout(),
+    getPublishedRoles(),
+    getPublishedExperience(),
+    getPublishedEducation(),
+    getPublishedServices(),
+    getPublishedSocialLinks(),
+    getSiteSettings(),
+  ]);
 
-      <div id="skills" className="mt-24">
-        <Skills />
-      </div>
-
-      <div id="projects" className="mt-24">
-        <Projects />
-      </div>
-
-      <div id="about" className="mt-24">
-        <About />
-      </div>
-
-      <div id="education" className="mt-24 mb-24">
-        <Education />
-      </div>
-
-      <div id="certifications" className="mt-24 mb-24">
-        <Certifications/>
-      </div>
-      <div id="faq" className="mt-24 mb-24">
-        <FAQSection/>
-      </div>
-
-      <div id="contact" className="mt-24 mb-24">
-        <Contact />
-      </div>
-
-      <FloatingContact />
-      {/* scroll to top */}
-      <ScrollToTopButton />
-
-    </main>
-  );
+  return <main className="portfolio-page"><PremiumPortfolio profile={profile} hero={hero} projects={projects} skills={skills} testimonials={testimonials} certifications={certifications} about={about} roles={roles} experience={experience} education={education} services={services} socialLinks={socialLinks} siteSettings={siteSettings} /><div id="contact"><Contact profile={profile} /></div></main>;
 }

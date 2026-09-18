@@ -1,9 +1,7 @@
 import React from "react";
 import "./globals.css";
-import SmoothScroll from "../Component/buttons/SmoothScroll";
-import { ThemeProvider } from "../Component/providers/theme-provider";
-import Navbar from "../Component/header/Navbar";
-import Footer from "../Component/footer/Footer";
+import { ThemeProvider } from "../components/providers/theme-provider";
+import AppShell from "../components/shared/AppShell";
 
 
 export default function RootLayout({
@@ -12,15 +10,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className=" dark:bg-slate-950 dark:text-slate-200 antialiased">
-        <SmoothScroll>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <Navbar />
-            {children}
-            <Footer />
-          </ThemeProvider>
-        </SmoothScroll>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <AppShell>{children}</AppShell>
+        </ThemeProvider>
       </body>
     </html>
   );

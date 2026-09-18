@@ -35,7 +35,7 @@ export default function NotFound() {
             Lost in Space?
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg mb-10 max-w-md mx-auto">
-            The page you are looking for has been moved, deleted, or never existed in this dimension. Let's get you back home.
+            The page you are looking for has been moved, deleted, or never existed in this dimension. Let&apos;s get you back home.
           </p>
 
           {/* Home Link */}

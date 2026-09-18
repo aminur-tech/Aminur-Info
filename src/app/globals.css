@@ -1,2 +1,124 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+	--ink: #17211d;
+	--paper: #f6f6f2;
+}
+
+body {
+	margin: 0;
+	background: var(--paper);
+}
+
+.portfolio-page {
+	font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+.portfolio-page .portfolio-grid {
+	background-image: linear-gradient(rgba(23, 33, 29, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(23, 33, 29, .06) 1px, transparent 1px);
+	background-size: 52px 52px;
+	mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+
+.portfolio-page .eyebrow {
+	color: #657b00;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+}
+
+.portfolio-page .section-title {
+	font-family: Georgia, serif;
+	font-size: clamp(2.5rem, 5vw, 5rem);
+	letter-spacing: -.06em;
+	line-height: .95;
+}
+
+.dark .portfolio-page {
+	background: #101512;
+	color: #f1f4eb;
+}
+
+.dark .portfolio-page section,
+.dark .portfolio-page > div {
+	border-color: rgba(241, 244, 235, .14);
+}
+
+.dark .portfolio-page [class*="bg-[#f6f6f2]"],
+.dark .portfolio-page [class*="bg-white"] {
+	background-color: #18211c;
+}
+
+.dark .portfolio-page [class*="bg-[#e9eee4]"] {
+	background-color: #202b24;
+}
+
+.dark .portfolio-page [class*="text-[#17211d]"] {
+	color: #f1f4eb;
+}
+
+.dark .portfolio-page [class*="text-[#52605a]"] {
+	color: #aab5ad;
+}
+
+.dark .portfolio-page [class*="border-[#17211d]"] {
+	border-color: rgba(241, 244, 235, .16);
+}
+
+.dark .portfolio-page .portfolio-grid {
+	background-image: linear-gradient(rgba(241, 244, 235, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(241, 244, 235, .06) 1px, transparent 1px);
+}
+
+@layer components {
+	.dark .admin-shell section {
+		border-color: rgb(30 41 59);
+		background-color: rgb(15 23 42);
+	}
+
+	.dark .admin-shell label,
+	.dark .admin-shell h2,
+	.dark .admin-shell h3,
+	.dark .admin-shell th,
+	.dark .admin-shell td {
+		color: rgb(226 232 240);
+	}
+
+	.dark .admin-shell p,
+	.dark .admin-shell span {
+		color: rgb(148 163 184);
+	}
+
+	.dark .admin-shell input,
+	.dark .admin-shell textarea,
+	.dark .admin-shell select {
+		border-color: rgb(51 65 85);
+		background-color: rgb(15 23 42);
+		color: rgb(241 245 249);
+	}
+
+	.dark .admin-shell input::placeholder,
+	.dark .admin-shell textarea::placeholder {
+		color: rgb(100 116 139);
+	}
+
+	.dark .admin-shell input[type="checkbox"] {
+		accent-color: rgb(16 185 129);
+	}
+
+	.dark .admin-shell table thead,
+	.dark .admin-shell table tr {
+		border-color: rgb(30 41 59);
+	}
+
+	.dark .admin-shell table tr:hover {
+		background-color: rgb(30 41 59 / 0.45);
+	}
+
+	.dark .admin-shell .bg-slate-100 {
+		background-color: rgb(30 41 59);
+		color: rgb(226 232 240);
+	}
+}
+
