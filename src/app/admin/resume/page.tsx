@@ -47,7 +47,19 @@ export default function AdminResumePage() {
     setLoading(false);
   }
 
-  useEffect(() => { void loadRecords(); }, []);
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadInitialRecords() {
+      const response = await fetch("/api/admin/resume");
+      if (cancelled) return;
+      if (response.ok) setRecords(await response.json());
+      setLoading(false);
+    }
+
+    void loadInitialRecords();
+    return () => { cancelled = true; };
+  }, []);
 
   function updateField(field: keyof FormState, value: string | boolean | number) {
     setForm((current) => ({ ...current, [field]: value }));
