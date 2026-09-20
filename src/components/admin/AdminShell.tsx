@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X, LayoutDashboard, UserRound, Sparkles, BriefcaseBusiness, GraduationCap, MessageSquare, Settings, Search, LogOut, Quote, BookOpen, Wrench, Info, Award, Blocks, Link2, ShieldCheck } from "lucide-react";
+import { Menu, X, LayoutDashboard, UserRound, Sparkles, BriefcaseBusiness, GraduationCap, MessageSquare, Settings, Search, LogOut, Quote, BookOpen, Wrench, Info, Award, Blocks, Link2, ShieldCheck, FileText } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -15,6 +15,7 @@ const navigation = [
   { href: "/admin/projects", label: "Projects", icon: BriefcaseBusiness },
   { href: "/admin/experience", label: "Experience", icon: GraduationCap },
   { href: "/admin/education", label: "Education", icon: BookOpen },
+  { href: "/admin/resume", label: "Resume", icon: FileText },
   { href: "/admin/certifications", label: "Certifications", icon: Award },
   { href: "/admin/skills", label: "Skills", icon: Wrench },
   { href: "/admin/contact-messages", label: "Messages", icon: MessageSquare },

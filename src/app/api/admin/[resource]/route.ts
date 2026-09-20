@@ -46,7 +46,15 @@ function normalizeData(input: Record<string, unknown>) {
     if (dateFields.has(key)) data[key] = value ? new Date(String(value)) : null;
     else if (arrayFields.has(key)) data[key] = Array.isArray(value) ? value.map(String).filter(Boolean) : String(value ?? "").split(",").map((item) => item.trim()).filter(Boolean);
     else if (booleanFields.has(key)) data[key] = value === true || value === "true";
-    else if (numberFields.has(key) && value !== "" && value !== null) data[key] = Number(value);
+    else if (numberFields.has(key)) {
+      if (value === "" || value === null) {
+        if (key === "sortOrder") data[key] = 0;
+        continue;
+      }
+      const numericValue = Number(value);
+      if (!Number.isNaN(numericValue)) data[key] = numericValue;
+      continue;
+    }
     else data[key] = value === "" ? null : value;
   }
   return data;
@@ -58,8 +66,27 @@ export async function GET(request: Request, { params }: { params: Promise<{ reso
   const delegate = await getDelegate(resource);
   if (!delegate) return NextResponse.json({ error: "Unknown admin resource." }, { status: 404 });
   const id = new URL(request.url).searchParams.get("id");
-  const result = id ? await delegate.findFirst({ where: { id } }) : singletonResources.has(resource) ? await delegate.findFirst() : await delegate.findMany({ orderBy: { updatedAt: "desc" } });
-  return NextResponse.json(result);
+
+  if (id) {
+    const result = await delegate.findFirst({ where: { id } });
+    return NextResponse.json(result);
+  }
+
+  if (singletonResources.has(resource)) {
+    const result = await delegate.findFirst();
+    return NextResponse.json(result);
+  }
+
+  const modelName = resources[resource as ResourceKey];
+  const fallbackOrderBy = modelName === "socialLink" ? { sortOrder: "asc" } : { updatedAt: "desc" };
+
+  try {
+    const result = await delegate.findMany({ orderBy: fallbackOrderBy });
+    return NextResponse.json(result);
+  } catch (error) {
+    const fallbackResult = await delegate.findMany({ orderBy: { sortOrder: "asc" } });
+    return NextResponse.json(fallbackResult);
+  }
 }
 
 export async function POST(request: Request, { params }: { params: Promise<{ resource: string }> }) {

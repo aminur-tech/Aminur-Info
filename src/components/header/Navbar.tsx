@@ -70,15 +70,15 @@ export default function Navbar() {
           Using 'fixed' and 'inset-x-0' ensures it stretches across mobile.
           'z-40' keeps it below the drawer overlay.
       */}
-      <header className="fixed inset-x-0 top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur-xl transition-all duration-300 dark:border-white/10 dark:bg-slate-950/80">
-        <div className="mx-auto flex h-16 w-full items-center justify-between px-4 md:w-11/12 md:px-6">
+      <header className="fixed inset-x-0 top-0 z-40 w-full border-b border-[#17211d]/10 bg-[#f6f6f2]/90 backdrop-blur-xl transition-all duration-300 dark:border-[#f1f4eb]/10 dark:bg-[#101512]/90">
+        <div className="mx-auto flex h-[4.5rem] w-full max-w-7xl items-center justify-between px-5 md:px-8">
           
           {/* Logo */}
           <button
             onClick={() => scrollToSection("hero")}
             className="flex items-center gap-2"
           >
-            <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-emerald-500 shadow-lg shadow-emerald-500/20">
+            <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-[#657b00] shadow-lg shadow-[#657b00]/20">
               <img
                 src="/logo.png"
                 alt="Logo"
@@ -86,8 +86,8 @@ export default function Navbar() {
               />
             </div>
 
-            <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-              Aminur<span className="text-emerald-500">.</span>
+            <span className="font-serif text-xl font-bold tracking-tight text-[#17211d] dark:text-[#f1f4eb]">
+              Aminur<span className="text-[#657b00]">.</span>
             </span>
           </button>
 
@@ -97,14 +97,14 @@ export default function Navbar() {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="group relative text-sm font-medium text-slate-600 transition-all duration-300 hover:text-emerald-500 dark:text-slate-300 dark:hover:text-emerald-400"
+                className="group relative text-xs font-bold uppercase tracking-[0.16em] text-[#52605a] transition-all duration-300 hover:text-[#657b00] dark:text-[#aab5ad] dark:hover:text-[#a5bd2a]"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-2 left-0 h-px w-0 bg-[#657b00] transition-all duration-300 group-hover:w-full"></span>
               </button>
             ))}
 
-            <div className="border-l border-slate-200 pl-4 dark:border-slate-700">
+            <div className="border-l border-[#17211d]/15 pl-4 dark:border-[#f1f4eb]/15">
               <ToggleBtn />
             </div>
           </nav>
@@ -112,7 +112,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(true)}
-            className="rounded-lg p-2 text-2xl text-slate-900 transition hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800 md:hidden"
+            className="rounded-full p-2 text-2xl text-[#17211d] transition hover:bg-[#e9eee4] dark:text-[#f1f4eb] dark:hover:bg-[#202b24] md:hidden"
             aria-label="Open Menu"
           >
             <HiOutlineBars3 />
@@ -146,15 +146,15 @@ export default function Navbar() {
                 damping: 25,
                 stiffness: 200,
               }}
-              className="fixed left-0 top-0 z-50 flex h-full w-[280px] flex-col border-r border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-950 md:hidden"
+              className="fixed left-0 top-0 z-50 flex h-full w-[280px] flex-col border-r border-[#17211d]/10 bg-[#f6f6f2] shadow-2xl dark:border-[#f1f4eb]/10 dark:bg-[#101512] md:hidden"
             >
               {/* Drawer Header */}
-              <div className="flex items-center justify-between border-b border-slate-200 px-5 py-5 dark:border-slate-800">
+              <div className="flex items-center justify-between border-b border-[#17211d]/10 px-5 py-5 dark:border-[#f1f4eb]/10">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-                    Aminur<span className="text-emerald-500">.</span>
+                  <h2 className="font-serif text-lg font-bold text-[#17211d] dark:text-[#f1f4eb]">
+                    Aminur<span className="text-[#657b00]">.</span>
                   </h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-[#657b00] dark:text-[#a5bd2a]">
                     Full Stack Developer
                   </p>
                 </div>
@@ -163,7 +163,7 @@ export default function Navbar() {
                   <ToggleBtn />
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="rounded-lg p-2 text-2xl text-slate-900 transition hover:rotate-90 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800"
+                    className="rounded-full p-2 text-2xl text-[#17211d] transition hover:rotate-90 hover:bg-[#e9eee4] dark:text-[#f1f4eb] dark:hover:bg-[#202b24]"
                   >
                     <HiX />
                   </button>
@@ -179,7 +179,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
                     onClick={() => scrollToSection(link.id)}
-                    className="px-6 py-4 text-left text-base font-medium text-slate-700 transition-all duration-300 hover:bg-slate-100 hover:text-emerald-500 dark:text-slate-200 dark:hover:bg-slate-900 dark:hover:text-emerald-400"
+                    className="px-6 py-4 text-left text-sm font-bold uppercase tracking-[0.14em] text-[#52605a] transition-all duration-300 hover:bg-[#e9eee4] hover:text-[#657b00] dark:text-[#aab5ad] dark:hover:bg-[#202b24] dark:hover:text-[#a5bd2a]"
                   >
                     {link.name}
                   </Motion.button>
@@ -187,8 +187,8 @@ export default function Navbar() {
               </div>
 
               {/* Drawer Footer */}
-              <div className="mt-auto border-t border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/40">
-                <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+              <div className="mt-auto border-t border-[#17211d]/10 bg-[#e9eee4] p-6 dark:border-[#f1f4eb]/10 dark:bg-[#18211c]">
+                <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#657b00] dark:text-[#a5bd2a]">
                   Connect With Me
                 </p>
 
@@ -199,7 +199,7 @@ export default function Navbar() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-all duration-300 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white dark:border-slate-700 dark:text-slate-300"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-[#17211d]/15 text-[#52605a] transition-all duration-300 hover:border-[#657b00] hover:bg-[#657b00] hover:text-white dark:border-[#f1f4eb]/15 dark:text-[#aab5ad]"
                     >
                       {social.icon}
                     </a>

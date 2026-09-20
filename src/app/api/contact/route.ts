@@ -11,12 +11,39 @@ const contactSchema = z.object({
   budgetRange: z.string().trim().max(160).optional(),
   subject: z.string().trim().min(2).max(160),
   message: z.string().trim().min(10).max(5000),
-  website: z.string().max(0).optional(),
+  website: z.string().max(0).optional().or(z.literal("")).optional(),
 });
+
+function normalizePayload(raw: Record<string, unknown>) {
+  const normalized = Object.fromEntries(
+    Object.entries(raw).map(([key, value]) => {
+      if (typeof value === "string") {
+        return [key, value.trim()];
+      }
+      return [key, value];
+    }),
+  ) as Record<string, unknown>;
+
+  return {
+    ...normalized,
+    website: normalized.website ?? "",
+  };
+}
+
+async function parseContactRequest(request: Request) {
+  const contentType = request.headers.get("content-type") ?? "";
+
+  if (contentType.includes("application/json")) {
+    return normalizePayload(await request.json());
+  }
+
+  const formData = await request.formData();
+  return normalizePayload(Object.fromEntries(formData.entries()));
+}
 
 export async function POST(request: Request) {
   try {
-    const body = contactSchema.parse(await request.json());
+    const body = contactSchema.parse(await parseContactRequest(request));
     if (body.website) return NextResponse.json({ message: "Message received." });
     if (!process.env.DATABASE_URL) {
       return NextResponse.json({ error: "Contact service is not configured." }, { status: 503 });
@@ -31,7 +58,9 @@ export async function POST(request: Request) {
     }
     return NextResponse.json({ message: "Message sent! I will get back to you soon." }, { status: 201 });
   } catch (error) {
-    if (error instanceof z.ZodError) return NextResponse.json({ error: "Please check the form fields." }, { status: 400 });
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: "Please check the form fields.", fields: error.flatten().fieldErrors }, { status: 400 });
+    }
     return NextResponse.json({ error: "Unable to process your message." }, { status: 500 });
   }
 }

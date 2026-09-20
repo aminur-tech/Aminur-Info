@@ -1,7 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { db } from "../db";
 import { env } from "../env";
-import type { AboutContent, Certification, Education, Experience, HeroContent, Profile, Project, Role, SeoSettingsContent, Service, SiteSettingsContent, Skill, SocialLink, Testimonial } from "../../types/portfolio";
+import type { AboutContent, Certification, Education, Experience, HeroContent, Profile, Project, Resume, Role, SeoSettingsContent, Service, SiteSettingsContent, Skill, SocialLink, Testimonial } from "../../types/portfolio";
 
 const emptyProfile: Profile = {
   name: "Aminur Rahman", title: "MERN Stack & Full Stack Developer", short_bio: null, long_bio: null,
@@ -57,6 +57,10 @@ export const getPublishedProjects = unstable_cache(async (): Promise<Project[]> 
     thumbnail_url: project.thumbnailUrl,
     demo_url: project.demoUrl,
     github_url: project.githubUrl,
+    frontend_github_url: project.frontendGithubUrl,
+    backend_github_url: project.backendGithubUrl,
+    server_site_url: project.serverSiteUrl,
+    local_project_url: project.localProjectUrl,
     technologies: project.technologies,
     category: project.category,
     featured: project.featured,
@@ -120,6 +124,33 @@ export const getPublishedAbout = unstable_cache(async (): Promise<AboutContent |
   const about = await db.about.findFirst();
   return about ? { title: about.title, description: about.description, image_url: about.imageUrl, highlights: about.highlights, values: about.values } : null;
 }, ["published-about"], { revalidate: 300 });
+
+export const getActiveResume = unstable_cache(async (): Promise<Resume | null> => {
+  if (!env.DATABASE_URL) return null;
+  const activeResume = await db.resume.findFirst({ where: { isActive: true, published: true } });
+  if (!activeResume) {
+    const fallbackResume = await db.resume.findFirst({ where: { published: true }, orderBy: { sortOrder: "asc" } });
+    if (!fallbackResume) return null;
+    return {
+      id: fallbackResume.id,
+      title: fallbackResume.title,
+      file_url: fallbackResume.fileUrl,
+      summary: fallbackResume.summary,
+      is_active: fallbackResume.isActive,
+      version: fallbackResume.version,
+      published: fallbackResume.published,
+    };
+  }
+  return {
+    id: activeResume.id,
+    title: activeResume.title,
+    file_url: activeResume.fileUrl,
+    summary: activeResume.summary,
+    is_active: activeResume.isActive,
+    version: activeResume.version,
+    published: activeResume.published,
+  };
+}, ["active-resume"], { revalidate: 300 });
 
 export const getPublishedExperience = unstable_cache(async (): Promise<Experience[]> => {
   if (!env.DATABASE_URL) return [];

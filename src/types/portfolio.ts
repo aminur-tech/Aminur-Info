@@ -7,6 +7,10 @@ export type Project = {
   thumbnail_url: string | null;
   demo_url: string | null;
   github_url: string | null;
+  frontend_github_url: string | null;
+  backend_github_url: string | null;
+  server_site_url: string | null;
+  local_project_url: string | null;
   technologies: string[];
   category: string | null;
   featured: boolean;
@@ -74,6 +78,16 @@ export type AboutContent = {
   image_url: string | null;
   highlights: string[];
   values: string[];
+};
+
+export type Resume = {
+  id: string;
+  title: string;
+  file_url: string;
+  summary: string | null;
+  is_active: boolean;
+  version: string | null;
+  published: boolean;
 };
 
 export type Experience = {

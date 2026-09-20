@@ -157,31 +157,35 @@ model Skill {
 }
 
 model Project {
-  id               String    @id @default(auto()) @map("_id") @db.ObjectId
-  title            String
-  slug             String    @unique
-  shortDescription String
-  fullDescription  String?
-  thumbnailUrl     String?
-  demoUrl          String?
-  githubUrl        String?
-  technologies     String[]
-  category         String?
-  clientName       String?
-  clientUrl        String?
-  startDate        DateTime?
-  completionDate   DateTime?
-  featured         Boolean   @default(false)
-  published        Boolean   @default(false)
-  sortOrder        Int       @default(0)
-  gallery          Json?
-  challenges       String?
-  solutions        String?
-  results          String?
-  seoTitle         String?
-  seoDescription   String?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  title              String
+  slug               String    @unique
+  shortDescription   String
+  fullDescription    String?
+  thumbnailUrl       String?
+  demoUrl            String?
+  githubUrl          String?
+  frontendGithubUrl  String?
+  backendGithubUrl   String?
+  serverSiteUrl      String?
+  localProjectUrl    String?
+  technologies       String[]
+  category           String?
+  clientName         String?
+  clientUrl          String?
+  startDate          DateTime?
+  completionDate     DateTime?
+  featured           Boolean   @default(false)
+  published          Boolean   @default(false)
+  sortOrder          Int       @default(0)
+  gallery            Json?
+  challenges         String?
+  solutions          String?
+  results            String?
+  seoTitle           String?
+  seoDescription     String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
   @@index([published, featured, sortOrder])
 }
@@ -271,6 +275,21 @@ model Certification {
   sortOrder     Int       @default(0)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+}
+
+model Resume {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  fileUrl     String
+  summary     String?
+  isActive    Boolean   @default(false)
+  version     String?
+  published   Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([published, isActive, sortOrder])
 }
 
 model SocialLink {

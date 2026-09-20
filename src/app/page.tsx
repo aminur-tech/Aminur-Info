@@ -1,6 +1,6 @@
 import Contact from "../components/home/Contact";
 import PremiumPortfolio from "../components/home/PremiumPortfolio";
-import { getApprovedTestimonials, getHero, getProfile, getPublishedAbout, getPublishedCertifications, getPublishedEducation, getPublishedExperience, getPublishedProjects, getPublishedRoles, getPublishedServices, getPublishedSkills, getPublishedSocialLinks, getSeoSettings, getSiteSettings } from "../lib/queries/portfolio";
+import { getActiveResume, getApprovedTestimonials, getHero, getProfile, getPublishedAbout, getPublishedCertifications, getPublishedEducation, getPublishedExperience, getPublishedProjects, getPublishedRoles, getPublishedServices, getPublishedSkills, getPublishedSocialLinks, getSeoSettings, getSiteSettings } from "../lib/queries/portfolio";
 
 
 
@@ -10,7 +10,7 @@ export async function generateMetadata() {
 }
 
 export default async function HomePage() {
-  const [profile, hero, projects, skills, testimonials, certifications, about, roles, experience, education, services, socialLinks, siteSettings] = await Promise.all([
+  const [profile, hero, projects, skills, testimonials, certifications, about, roles, experience, education, services, socialLinks, siteSettings, activeResume] = await Promise.all([
     getProfile(),
     getHero(),
     getPublishedProjects(),
@@ -24,7 +24,8 @@ export default async function HomePage() {
     getPublishedServices(),
     getPublishedSocialLinks(),
     getSiteSettings(),
+    getActiveResume(),
   ]);
 
-  return <main className="portfolio-page"><PremiumPortfolio profile={profile} hero={hero} projects={projects} skills={skills} testimonials={testimonials} certifications={certifications} about={about} roles={roles} experience={experience} education={education} services={services} socialLinks={socialLinks} siteSettings={siteSettings} /><div id="contact"><Contact profile={profile} /></div></main>;
+  return <main className="portfolio-page"><PremiumPortfolio profile={profile} hero={hero} projects={projects} skills={skills} testimonials={testimonials} certifications={certifications} about={about} roles={roles} experience={experience} education={education} services={services} socialLinks={socialLinks} siteSettings={siteSettings} activeResume={activeResume} /><div id="contact"><Contact profile={profile} /></div></main>;
 }

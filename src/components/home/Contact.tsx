@@ -109,7 +109,7 @@ export default function Contact({ profile }: { profile?: Profile }) {
 
                             <div className="space-y-2">
                                 <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-2 tracking-widest">Message</label>
-                                <textarea name="message" placeholder="Tell me about your project..." rows={5} className="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 focus:border-emerald-500/50 focus:ring-0 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all outline-none resize-none"></textarea>
+                                <textarea name="message" placeholder="Tell me about your project..." rows={5} minLength={10} maxLength={5000} required className="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 focus:border-emerald-500/50 focus:ring-0 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all outline-none resize-none"></textarea>
                             </div>
 
                             <button
