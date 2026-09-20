@@ -46,7 +46,7 @@ export default function About() {
           >
             <div className="relative overflow-hidden rounded-3xl bg-slate-200 dark:bg-slate-900 border border-slate-200 dark:border-white/10 shadow-2xl">
               <img
-                src="https://i.ibb.co.com/gMxQc4vH/profile.jpg"
+                src="/logo.png"
                 alt="Aminur Rahman"
                 className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
               />

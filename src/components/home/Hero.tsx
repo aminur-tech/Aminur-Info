@@ -106,7 +106,7 @@ const Hero = ({ profile }: { profile?: Profile }) => {
               WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
             }}>
               <img
-              src={profile?.profile_image_url || "https://i.ibb.co.com/h1nS5dhr/profile-removebg-preview.png"}
+              src={profile?.profile_image_url || "/logo.png"}
               alt={profile?.name || "Aminur Rahman"}
               className="w-full h-auto filter brightness-110 contrast-[1.05]"
             />
