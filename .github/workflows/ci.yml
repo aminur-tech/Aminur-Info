@@ -12,6 +12,7 @@ jobs:
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL || 'mongodb://127.0.0.1:27017/portfolio_ci' }}
       AUTH_SECRET: ${{ secrets.AUTH_SECRET || 'ci-only-auth-secret-change-me-1234567890' }}
+      SKIP_DATABASE: true
       NEXT_PUBLIC_SITE_URL: https://example.com
     steps:
       - name: Checkout

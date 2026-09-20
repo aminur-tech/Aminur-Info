@@ -5,7 +5,7 @@ import { env } from "../../../lib/env";
 
 export default async function ProjectCaseStudy({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  if (!env.DATABASE_URL) notFound();
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") notFound();
   const project = await db.project.findFirst({ where: { slug, published: true } });
   if (!project) notFound();
 

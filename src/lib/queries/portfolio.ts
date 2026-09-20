@@ -10,7 +10,7 @@ const emptyProfile: Profile = {
 };
 
 export const getProfile = unstable_cache(async (): Promise<Profile> => {
-  if (!env.DATABASE_URL) return emptyProfile;
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return emptyProfile;
   const profile = await db.profile.findFirst({ where: { isPublic: true } });
   if (!profile) return emptyProfile;
   return {
@@ -28,25 +28,25 @@ export const getProfile = unstable_cache(async (): Promise<Profile> => {
 }, ["portfolio-profile"], { revalidate: 300 });
 
 export const getHero = unstable_cache(async (): Promise<HeroContent | null> => {
-  if (!env.DATABASE_URL) return null;
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return null;
   const hero = await db.hero.findFirst();
   return hero ? { heading: hero.heading, highlighted_text: hero.highlightedText, description: hero.description, primary_cta_label: hero.primaryCtaLabel, primary_cta_url: hero.primaryCtaUrl, secondary_cta_label: hero.secondaryCtaLabel, secondary_cta_url: hero.secondaryCtaUrl, availability_badge: hero.availabilityBadge, image_url: hero.imageUrl } : null;
 }, ["portfolio-hero"], { revalidate: 300 });
 
 export const getSiteSettings = unstable_cache(async (): Promise<SiteSettingsContent | null> => {
-  if (!env.DATABASE_URL) return null;
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return null;
   const settings = await db.siteSettings.findFirst();
   return settings ? { site_name: settings.siteName, professional_title: settings.professionalTitle, footer_text: settings.footerText, copyright_text: settings.copyrightText } : null;
 }, ["portfolio-site-settings"], { revalidate: 300 });
 
 export const getSeoSettings = unstable_cache(async (): Promise<SeoSettingsContent | null> => {
-  if (!env.DATABASE_URL) return null;
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return null;
   const settings = await db.sEOSettings.findFirst();
   return settings ? { title: settings.title, description: settings.description, keywords: settings.keywords, og_title: settings.ogTitle, og_description: settings.ogDescription, og_image: settings.ogImage, canonical_url: settings.canonicalUrl, allow_indexing: settings.allowIndexing } : null;
 }, ["portfolio-seo-settings"], { revalidate: 300 });
 
 export const getPublishedProjects = unstable_cache(async (): Promise<Project[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const projects = await db.project.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return projects.map((project) => ({
     id: project.id,
@@ -68,7 +68,7 @@ export const getPublishedProjects = unstable_cache(async (): Promise<Project[]> 
 }, ["published-projects"], { revalidate: 300 });
 
 export const getPublishedSkills = unstable_cache(async (): Promise<Skill[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const skills = await db.skill.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return skills.map((skill) => ({
     id: skill.id,
@@ -81,7 +81,7 @@ export const getPublishedSkills = unstable_cache(async (): Promise<Skill[]> => {
 }, ["published-skills"], { revalidate: 300 });
 
 export const getPublishedCertifications = unstable_cache(async (): Promise<Certification[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const certifications = await db.certification.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return certifications.map((certification) => ({
     id: certification.id,
@@ -95,7 +95,7 @@ export const getPublishedCertifications = unstable_cache(async (): Promise<Certi
 }, ["published-certifications"], { revalidate: 300 });
 
 export const getApprovedTestimonials = unstable_cache(async (): Promise<Testimonial[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const testimonials = await db.testimonial.findMany({ where: { status: "approved" }, orderBy: [{ featured: "desc" }, { createdAt: "desc" }], take: 12 });
   return testimonials.map((testimonial) => ({
     id: testimonial.id,
@@ -109,7 +109,7 @@ export const getApprovedTestimonials = unstable_cache(async (): Promise<Testimon
 }, ["approved-testimonials"], { revalidate: 300 });
 
 export const getPublishedRoles = unstable_cache(async (): Promise<Role[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const roles = await db.role.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return roles.map((role) => ({
     id: role.id, title: role.title, slug: role.slug, summary: role.summary,
@@ -120,13 +120,13 @@ export const getPublishedRoles = unstable_cache(async (): Promise<Role[]> => {
 }, ["published-roles"], { revalidate: 300 });
 
 export const getPublishedAbout = unstable_cache(async (): Promise<AboutContent | null> => {
-  if (!env.DATABASE_URL) return null;
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return null;
   const about = await db.about.findFirst();
   return about ? { title: about.title, description: about.description, image_url: about.imageUrl, highlights: about.highlights, values: about.values } : null;
 }, ["published-about"], { revalidate: 300 });
 
 export const getActiveResume = unstable_cache(async (): Promise<Resume | null> => {
-  if (!env.DATABASE_URL) return null;
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return null;
   const activeResume = await db.resume.findFirst({ where: { isActive: true, published: true } });
   if (!activeResume) {
     const fallbackResume = await db.resume.findFirst({ where: { published: true }, orderBy: { sortOrder: "asc" } });
@@ -153,25 +153,25 @@ export const getActiveResume = unstable_cache(async (): Promise<Resume | null> =
 }, ["active-resume"], { revalidate: 300 });
 
 export const getPublishedExperience = unstable_cache(async (): Promise<Experience[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const experiences = await db.experience.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return experiences.map((item) => ({ id: item.id, company: item.company, position: item.position, location: item.location, start_date: item.startDate?.toISOString() ?? null, end_date: item.endDate?.toISOString() ?? null, current_position: item.currentPosition, description: item.description, responsibilities: item.responsibilities, technologies: item.technologies }));
 }, ["published-experience"], { revalidate: 300 });
 
 export const getPublishedEducation = unstable_cache(async (): Promise<Education[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const education = await db.education.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return education.map((item) => ({ id: item.id, institution: item.institution, degree: item.degree, field: item.field, start_date: item.startDate?.toISOString() ?? null, end_date: item.endDate?.toISOString() ?? null, grade: item.grade, description: item.description }));
 }, ["published-education"], { revalidate: 300 });
 
 export const getPublishedServices = unstable_cache(async (): Promise<Service[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const services = await db.service.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return services.map((item) => ({ id: item.id, title: item.title, short_description: item.shortDescription, full_description: item.fullDescription, features: item.features, delivery_time: item.deliveryTime }));
 }, ["published-services"], { revalidate: 300 });
 
 export const getPublishedSocialLinks = unstable_cache(async (): Promise<SocialLink[]> => {
-  if (!env.DATABASE_URL) return [];
+  if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return [];
   const links = await db.socialLink.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } });
   return links.map((item) => ({ id: item.id, platform: item.platform, label: item.label, url: item.url }));
 }, ["published-social-links"], { revalidate: 300 });
