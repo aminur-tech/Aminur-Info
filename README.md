@@ -34,3 +34,25 @@ Open `/admin/login` to access the dashboard. The seed password is only for devel
 ## Production requirements
 
 Use a managed MongoDB deployment, a randomly generated `AUTH_SECRET`, HTTPS, and a real image/email provider. Do not commit `.env.local` or production credentials.
+
+### Vercel admin login
+
+Add these variables in Vercel under **Settings > Environment Variables** for the **Production** environment:
+
+```env
+DATABASE_URL=your-production-mongodb-connection-string
+AUTH_SECRET=your-random-secret-at-least-32-characters
+ADMIN_EMAIL=your-admin-email
+ADMIN_PASSWORD=your-admin-password
+```
+
+`ADMIN_PASSWORD` is used by the seed command to create or update the admin user's bcrypt hash. It is not checked directly at login, so run the seed against the same production database after adding the variables:
+
+```bash
+$env:DATABASE_URL="your-production-mongodb-connection-string"
+$env:ADMIN_EMAIL="your-admin-email"
+$env:ADMIN_PASSWORD="your-admin-password"
+npm run db:seed
+```
+
+Then redeploy Vercel. The email and password used at `/admin/login` must match the seeded values. Do not expose `ADMIN_PASSWORD` with a `NEXT_PUBLIC_` prefix.

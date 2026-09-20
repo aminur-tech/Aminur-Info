@@ -12,6 +12,7 @@ const credentialsSchema = z.object({
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  trustHost: true,
   session: { strategy: "jwt" },
   providers: [
     Credentials({
@@ -20,7 +21,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const parsed = credentialsSchema.safeParse(rawCredentials);
         if (!parsed.success) return null;
 
-        const user = await db.user.findUnique({ where: { email: parsed.data.email.toLowerCase() } });
+        const user = await db.user.findUnique({ where: { email: parsed.data.email.trim().toLowerCase() } });
         if (!user?.passwordHash || !user.isActive || user.role !== "ADMIN") return null;
         if (!(await bcrypt.compare(parsed.data.password, user.passwordHash))) return null;
 
