@@ -42,9 +42,13 @@ Add these variables in Vercel under **Settings > Environment Variables** for the
 ```env
 DATABASE_URL=your-production-mongodb-connection-string
 AUTH_SECRET=your-random-secret-at-least-32-characters
+AUTH_URL=https://your-production-domain.example
+NEXT_PUBLIC_SITE_URL=https://your-production-domain.example
 ADMIN_EMAIL=your-admin-email
 ADMIN_PASSWORD=your-admin-password
 ```
+
+Keep `AUTH_SECRET` unchanged across deployments. If it is regenerated, moved between Vercel environments, or differs between instances, existing Auth.js JWT cookies cannot be decrypted and login will show `JWTSessionError: no matching decryption secret`. After changing it, remove the site's `authjs.session-token` (or `__Secure-authjs.session-token`) cookie, then redeploy. Set the same secret separately in Preview if you test preview deployments.
 
 `ADMIN_PASSWORD` is used by the seed command to create or update the admin user's bcrypt hash. It is not checked directly at login, so run the seed against the same production database after adding the variables:
 
