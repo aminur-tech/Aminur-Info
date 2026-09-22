@@ -183,7 +183,6 @@ export default async function HomePage() {
         {/* FOOTER */}
         <Footer
           profile={profile}
-          socialLinks={socialLinks}
           siteSettings={siteSettings}
         />
       </div>

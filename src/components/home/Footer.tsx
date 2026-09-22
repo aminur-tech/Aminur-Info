@@ -15,7 +15,6 @@ import type {
 
 type Props = {
   profile: Profile;
-  socialLinks: never[];
   siteSettings: SiteSettingsContent | null;
 };
 
