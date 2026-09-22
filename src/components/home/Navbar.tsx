@@ -30,23 +30,7 @@ export default function Navbar() {
     { name: "Contact", id: "contact" },
   ];
 
-  const socialLinks = [
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/aminur-rahman4078",
-      icon: <FaLinkedinIn />,
-    },
-    {
-      name: "GitHub",
-      url: "https://github.com/aminur-tech",
-      icon: <FaGithub />,
-    },
-    {
-      name: "WhatsApp",
-      url: "https://wa.me/8801327694078",
-      icon: <FaWhatsapp />,
-    },
-  ];
+  
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -71,7 +55,7 @@ export default function Navbar() {
           'z-40' keeps it below the drawer overlay.
       */}
       <header className="fixed inset-x-0 top-0 z-40 w-full border-b border-[#17211d]/10 bg-[#f6f6f2]/90 backdrop-blur-xl transition-all duration-300 dark:border-[#f1f4eb]/10 dark:bg-[#101512]/90">
-        <div className="mx-auto flex h-[4.5rem] w-full max-w-7xl items-center justify-between px-5 md:px-8">
+        <div className="mx-auto flex h-[4.5rem] w-full max-w-7xl items-center justify-between px-2">
           
           {/* Logo */}
           <button
@@ -184,27 +168,6 @@ export default function Navbar() {
                     {link.name}
                   </Motion.button>
                 ))}
-              </div>
-
-              {/* Drawer Footer */}
-              <div className="mt-auto border-t border-[#17211d]/10 bg-[#e9eee4] p-6 dark:border-[#f1f4eb]/10 dark:bg-[#18211c]">
-                <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#657b00] dark:text-[#a5bd2a]">
-                  Connect With Me
-                </p>
-
-                <div className="flex gap-4">
-                  {socialLinks.map((social) => (
-                    <a
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-[#17211d]/15 text-[#52605a] transition-all duration-300 hover:border-[#657b00] hover:bg-[#657b00] hover:text-white dark:border-[#f1f4eb]/15 dark:text-[#aab5ad]"
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
-                </div>
               </div>
             </Motion.div>
           </>

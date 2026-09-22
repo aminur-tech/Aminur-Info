@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   ArrowUpRight,
@@ -8,39 +10,25 @@ import {
   Facebook,
   Instagram,
   Globe,
+  MessageCircle,
 } from "lucide-react";
 
 import type {
   Profile,
-  SocialLink,
   SiteSettingsContent,
 } from "../../types/portfolio";
 
 type Props = {
   profile: Profile;
-  socialLinks: SocialLink[];
+  socialLinks: never[];
   siteSettings: SiteSettingsContent | null;
 };
 
 const Footer = ({
   profile,
-  socialLinks,
   siteSettings,
 }: Props) => {
   const currentYear = new Date().getFullYear();
-
-  const getSocialIcon = (platform: string) => {
-    const value = platform.toLowerCase();
-
-    if (value.includes("github")) return Github;
-    if (value.includes("linkedin")) return Linkedin;
-    if (value.includes("twitter") || value.includes("x")) return Twitter;
-    if (value.includes("facebook")) return Facebook;
-    if (value.includes("instagram")) return Instagram;
-    if (value.includes("mail") || value.includes("email")) return Mail;
-
-    return Globe;
-  };
 
   const siteName =
     siteSettings?.site_name ||
@@ -60,9 +48,31 @@ const Footer = ({
     siteSettings?.copyright_text ||
     `© ${currentYear} ${siteName}. All rights reserved.`;
 
+  /*
+   * Static professional connections.
+   * Replace the WhatsApp placeholder with your own number.
+   */
+  const connectLinks = [
+    {
+      label: "LinkedIn",
+      icon: Linkedin,
+      url: "https://www.linkedin.com/in/aminur-tech",
+    },
+    {
+      label: "GitHub",
+      icon: Github,
+      url: "https://github.com/aminur-tech",
+    },
+    {
+      label: "WhatsApp",
+      icon: MessageCircle,
+      url: "https://wa.me/+8801327694078",
+    },
+  ]
+
   return (
     <footer className="border-t border-[#17211d]/10 dark:border-[#f1f4ef]/10">
-      <div className="mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:px-12 lg:py-16">
+      <div className="mx-auto max-w-7xl px-2 py-12 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           {/* Brand */}
           <div>
@@ -70,7 +80,8 @@ const Footer = ({
               href="#hero"
               className="group inline-flex items-center gap-3"
             >
-              <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#b6d900] text-sm font-black text-[#17211d] dark:bg-[#91aa00]">
+              <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#b6d900] text-sm font-black text-[#17211d] dark:bg-[#91aa00]"
+              >
                 {profile.name?.charAt(0) || "A"}
               </span>
 
@@ -100,42 +111,45 @@ const Footer = ({
             )}
           </div>
 
-          {/* Social links */}
+          {/* Static Connections */}
           <div className="lg:ml-auto lg:w-full lg:max-w-sm">
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] opacity-40">
               Connect
             </p>
 
-            {socialLinks.length > 0 ? (
-              <div className="grid gap-2 sm:grid-cols-2">
-                {socialLinks.map((social) => {
-                  const Icon = getSocialIcon(social.platform);
+            <div className="grid gap-2 sm:grid-cols-2">
+              {connectLinks.map((link) => {
+                const Icon = link.icon;
 
-                  return (
-                    <a
-                      key={social.id}
-                      href={social.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group flex items-center justify-between rounded-xl border border-[#17211d]/10 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#17211d] hover:text-[#f6f6f2] dark:border-[#f1f4ef]/10 dark:hover:bg-[#f1f4ef] dark:hover:text-[#101613]"
-                    >
-                      <span className="flex items-center gap-3">
-                        <Icon className="h-4 w-4" />
-                        <span className="text-sm font-medium">
-                          {social.label || social.platform}
-                        </span>
+                return (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target={
+                      link.url.startsWith("mailto:")
+                        ? undefined
+                        : "_blank"
+                    }
+                    rel={
+                      link.url.startsWith("mailto:")
+                        ? undefined
+                        : "noreferrer"
+                    }
+                    className="group flex items-center justify-between rounded-xl border border-[#17211d]/10 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#17211d] hover:text-[#f6f6f2] dark:border-[#f1f4ef]/10 dark:hover:bg-[#f1f4ef] dark:hover:text-[#101613]"
+                  >
+                    <span className="flex items-center gap-3">
+                      <Icon className="h-4 w-4" />
+
+                      <span className="text-sm font-medium">
+                        {link.label}
                       </span>
+                    </span>
 
-                      <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </a>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="text-sm opacity-50">
-                Social links coming soon.
-              </p>
-            )}
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -150,6 +164,7 @@ const Footer = ({
             className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] opacity-50 transition-opacity hover:opacity-100"
           >
             Back to top
+
             <ArrowUpRight className="h-3.5 w-3.5 -rotate-45" />
           </a>
         </div>

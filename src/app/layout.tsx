@@ -11,7 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className=" dark:bg-slate-950 dark:text-slate-200 antialiased">
+      <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <AppShell>{children}</AppShell>
         </ThemeProvider>
