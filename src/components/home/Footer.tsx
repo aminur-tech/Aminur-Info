@@ -5,11 +5,6 @@ import {
   ArrowUpRight,
   Github,
   Linkedin,
-  Mail,
-  Twitter,
-  Facebook,
-  Instagram,
-  Globe,
   MessageCircle,
 } from "lucide-react";
 

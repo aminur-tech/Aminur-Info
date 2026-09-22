@@ -29,7 +29,7 @@ const FinalCTA = () => {
             </h2>
 
             <p className="mt-6 max-w-2xl text-base leading-7 opacity-65 sm:text-lg">
-              Have an idea, product, or challenge you'd like to discuss?
+              Have an idea, product, or challenge you&apos;d like to discuss?
               Let&apos;s turn it into a focused digital experience.
             </p>
           </div>
