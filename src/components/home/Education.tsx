@@ -1,85 +1,99 @@
-"use client"
-import React from 'react';
-import { motion as Motion } from 'framer-motion';
-import { GraduationCap, Calendar, MapPin } from 'lucide-react';
+import React from "react";
+import { ArrowUpRight, GraduationCap } from "lucide-react";
 
-export default function Education() {
-  const education = [
-    {
-      degree: "Diploma in Engineering",
-      major: "Computer Science and Technology",
-      institution: "Nobojibon Polytechnic Institute",
-      year: "2026",
-      location: "Satkhira, Bangladesh"
-    }
-  ];
+import { Education as EducationType } from "../../types/portfolio";
+
+type EducationProps = {
+  education: EducationType[];
+};
+
+const Education = ({ education }: EducationProps) => {
+  const formatDate = (date: string | null) => {
+    if (!date) return "";
+
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
+  };
 
   return (
-    <section className=" bg-white dark:bg-slate-950 transition-colors duration-500" id="education">
-      <div className="w-full max-w-4xl mx-auto p-4">
-        {/* Section Header */}
-        <Motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-left md:text-center mb-16"
-        >
-          <span className="text-emerald-600 dark:text-emerald-500 font-bold tracking-[0.2em] uppercase text-xs text-center mb-4 block">
-            Academic Background
-          </span>
-          <h2 className="text-4xl md:text-5xl text-center font-black text-slate-900 dark:text-white tracking-tighter">
-            Education  <span className="text-emerald-600 dark:text-emerald-500">Qualifications</span>
-          </h2>
-        </Motion.div>
+    <section
+      id="education"
+      className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32"
+    >
+      <div className="mb-14 max-w-2xl">
+        <p className="eyebrow mb-4">
+          Education
+        </p>
 
-        {/* Education Card */}
-        <div className="space-y-8">
-          {education.map((edu, index) => (
-            <Motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative p-8 md:p-12 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-3xl shadow-xl shadow-slate-200/20 dark:shadow-none hover:border-emerald-500/30 transition-all duration-300"
-            >
-              {/* Header: Title and Time */}
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8 border-b border-slate-200 dark:border-slate-800 pb-8">
-                <div>
-                  <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{edu.degree}</h3>
-                  <p className="text-xl text-emerald-700 dark:text-emerald-500 font-medium">{edu.major}</p>
-                </div>
-                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-mono text-sm bg-white dark:bg-slate-800 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 w-fit">
-                  <Calendar size={16} />
-                  <span>Graduated: {edu.year}</span>
-                </div>
+        <h2 className="section-title">
+          Academic foundation for continuous growth.
+        </h2>
+      </div>
+
+      <div className="space-y-6">
+        {education.map((item) => (
+          <article
+            key={item.id}
+            className="group relative overflow-hidden rounded-[2rem] border border-[#17211d]/10 bg-white/70 p-6 dark:border-[#f1f4ef]/10 dark:bg-white/[0.03] md:p-8"
+          >
+            <div className="flex flex-col gap-6 md:flex-row md:items-start">
+              {/* Icon */}
+              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[#b6d900]/15 text-[#17211d] dark:text-[#f1f4ef]">
+                <GraduationCap className="h-7 w-7" />
               </div>
 
-              {/* Institution Details */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg">
-                    <GraduationCap size={20} className="text-emerald-600 dark:text-emerald-500" />
-                  </div>
+              {/* Content */}
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
                   <div>
-                    <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Institution</p>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200">{edu.institution}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg">
-                    <MapPin size={20} className="text-emerald-600 dark:text-emerald-500" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Location</p>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200">{edu.location}</p>
-                  </div>
-                </div>
-              </div>
+                    <h3 className="text-xl font-semibold tracking-tight md:text-2xl">
+                      {item.degree}
+                    </h3>
 
-            </Motion.div>
-          ))}
-        </div>
+                    <p className="mt-2 text-base font-medium text-[#17211d]/70 dark:text-[#f1f4ef]/70">
+                      {item.institution}
+                    </p>
+
+                    {item.field && (
+                      <p className="mt-1 text-sm text-[#17211d]/55 dark:text-[#f1f4ef]/55">
+                        {item.field}
+                      </p>
+                    )}
+                  </div>
+
+                  {(item.start_date || item.end_date) && (
+                    <div className="shrink-0 text-sm text-[#17211d]/55 dark:text-[#f1f4ef]/55">
+                      {formatDate(item.start_date)}
+
+                      {item.start_date && item.end_date && " — "}
+
+                      {formatDate(item.end_date)}
+                    </div>
+                  )}
+                </div>
+
+                {item.grade && (
+                  <div className="mt-5 inline-flex rounded-full border border-[#17211d]/10 bg-[#f6f6f2] px-4 py-2 text-xs font-semibold dark:border-[#f1f4ef]/10 dark:bg-white/[0.04]">
+                    Grade: {item.grade}
+                  </div>
+                )}
+
+                {item.description && (
+                  <p className="mt-5 max-w-3xl text-sm leading-7 text-[#17211d]/65 dark:text-[#f1f4ef]/65">
+                    {item.description}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <ArrowUpRight className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 opacity-[0.035] transition-transform duration-500 group-hover:scale-110" />
+          </article>
+        ))}
       </div>
     </section>
   );
-}
+};
+
+export default Education;

@@ -9,12 +9,22 @@ export type Field = {
   type?: "text" | "textarea" | "url" | "number" | "date" | "checkbox" | "image";
   required?: boolean;
   placeholder?: string;
+  separator?: string;
 };
 
 type RecordValue = string | boolean | number | null | undefined;
 type ResourceRecord = Record<string, RecordValue | string[]> & { id?: string };
 
 const inputClass = "w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950";
+const listFields = new Set(["highlights", "values", "responsibilities", "technologies", "features", "tags", "keywords", "projectIds", "skills", "achievements"]);
+
+function formatList(value: string[]) {
+  return value.map((item) => `"${item.replaceAll('"', '\\"')}"`).join(", ");
+}
+
+function parseList(value: string) {
+  return value.split(":").map((item) => item.trim().replace(/^"|"$/g, "").trim()).filter(Boolean);
+}
 
 export default function ResourceEditor({ title, description, resource, fields, singleton = false }: { title: string; description: string; resource: string; fields: readonly Field[]; singleton?: boolean }) {
   const [records, setRecords] = useState<ResourceRecord[]>([]);
@@ -30,7 +40,7 @@ export default function ResourceEditor({ title, description, resource, fields, s
     const value = record[field.name];
     if (field.type === "checkbox") return [field.name, Boolean(value)];
     if (field.type === "date") return [field.name, value ? String(value).slice(0, 10) : ""];
-    if (Array.isArray(value)) return [field.name, value.join(", ")];
+    if (Array.isArray(value)) return [field.name, formatList(value)];
     return [field.name, value ?? ""];
   })), [fields]);
 
@@ -65,10 +75,15 @@ export default function ResourceEditor({ title, description, resource, fields, s
     event.preventDefault();
     setSaving(true);
     setNotice("");
+    const payload = Object.fromEntries(fields.map((field) => {
+      const value = form[field.name];
+      if ((!field.separator && !listFields.has(field.name)) || typeof value !== "string") return [field.name, value];
+      return [field.name, parseList(value)];
+    }));
     const response = await fetch(`/api/admin/${resource}${editingId ? `?id=${editingId}` : ""}`, {
       method: editingId ? "PATCH" : "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify(payload),
     });
     const data = await response.json();
     setSaving(false);

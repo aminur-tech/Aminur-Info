@@ -79,8 +79,8 @@ export default function AdminExperiencePage() {
             ...experience,
             startDate: experience.startDate?.slice(0, 10) ?? "",
             endDate: experience.endDate?.slice(0, 10) ?? "",
-            responsibilities: experience.responsibilities.join(", "),
-            technologies: experience.technologies.join(", "),
+            responsibilities: experience.responsibilities.map((item) => `"${item.replaceAll('"', '\\"')}"`).join(", "),
+            technologies: experience.technologies.map((item) => `"${item.replaceAll('"', '\\"')}"`).join(", "),
             companyLogoUrl: experience.companyLogoUrl ?? "",
             companyUrl: experience.companyUrl ?? "",
             employmentType: experience.employmentType ?? "",
@@ -103,8 +103,8 @@ export default function AdminExperiencePage() {
             id: undefined,
             startDate: form.startDate ? new Date(`${form.startDate}T00:00:00.000Z`).toISOString() : null,
             endDate: form.currentPosition || !form.endDate ? null : new Date(`${form.endDate}T00:00:00.000Z`).toISOString(),
-            responsibilities: form.responsibilities.split(",").map((item) => item.trim()).filter(Boolean),
-            technologies: form.technologies.split(",").map((item) => item.trim()).filter(Boolean),
+            responsibilities: form.responsibilities.split(":").map((item) => item.trim().replace(/^"|"$/g, "").trim()).filter(Boolean),
+            technologies: form.technologies.split(":").map((item) => item.trim().replace(/^"|"$/g, "").trim()).filter(Boolean),
             companyLogoUrl: form.companyLogoUrl || null,
             companyUrl: form.companyUrl || null,
         };
@@ -157,8 +157,8 @@ export default function AdminExperiencePage() {
                         <label className="flex items-center gap-3 text-sm font-semibold"><input type="checkbox" checked={form.currentPosition} onChange={(event) => updateField("currentPosition", event.target.checked)} className="size-4 accent-emerald-600" />Current position</label>
                         <label className="flex items-center gap-3 text-sm font-semibold"><input type="checkbox" checked={form.published} onChange={(event) => updateField("published", event.target.checked)} className="size-4 accent-emerald-600" />Published on website</label>
                         <label className="space-y-2 text-sm font-semibold md:col-span-2"><span>Description</span><textarea rows={4} value={String(form.description)} onChange={(event) => updateField("description", event.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-normal outline-none focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-800" /></label>
-                        <label className="space-y-2 text-sm font-semibold"><span>Responsibilities <small className="font-normal text-slate-500">comma separated</small></span><textarea rows={3} value={form.responsibilities} onChange={(event) => updateField("responsibilities", event.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-normal outline-none focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-800" /></label>
-                        <label className="space-y-2 text-sm font-semibold"><span>Technologies <small className="font-normal text-slate-500">comma separated</small></span><textarea rows={3} value={form.technologies} onChange={(event) => updateField("technologies", event.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-normal outline-none focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-800" /></label>
+                        <label className="space-y-2 text-sm font-semibold"><span>Responsibilities <small className="font-normal text-slate-500">items separated by colon</small></span><textarea rows={3} value={form.responsibilities} onChange={(event) => updateField("responsibilities", event.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-normal outline-none focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-800" /></label>
+                        <label className="space-y-2 text-sm font-semibold"><span>Technologies <small className="font-normal text-slate-500">items separated by colon</small></span><textarea rows={3} value={form.technologies} onChange={(event) => updateField("technologies", event.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-normal outline-none focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-800" /></label>
                         <div className="md:col-span-2"><ImageUploader value={String(form.companyLogoUrl)} onChange={(value) => updateField("companyLogoUrl", value)} label="Company logo" /></div>
                     </div>
                     <div className="mt-6 flex justify-end gap-3"><button type="button" onClick={() => setEditing(false)} className="rounded-xl px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Cancel</button><button disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 disabled:opacity-60">{saving && <Loader2 size={16} className="animate-spin" />}{saving ? "Saving..." : "Save experience"}</button></div>

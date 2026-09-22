@@ -1,134 +1,216 @@
-"use client"
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from 'react-icons/fa';
-import { TypeAnimation } from 'react-type-animation';
-import type { Profile } from '../../types/portfolio';
+"use client";
 
-const Hero = ({ profile }: { profile?: Profile }) => {
-  const nameParts = (profile?.name || 'Aminur Rahman').split(' ');
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Download,
+  Sparkles,
+} from "lucide-react";
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
-  };
+import type {
+  HeroContent,
+  Profile,
+  Resume,
+} from "../../types/portfolio";
+
+type Props = {
+  profile: Profile;
+  hero: HeroContent | null;
+  activeResume: Resume | null;
+};
+
+const Hero = ({ profile, hero, activeResume }: Props) => {
+  const heading = hero?.heading || "Building digital products that matter.";
+  const highlightedText =
+    hero?.highlighted_text || profile.title || "Full-stack developer";
+
+  const description =
+    hero?.description ||
+    profile.short_bio ||
+    "I build modern, reliable web applications with thoughtful UX and production-ready engineering.";
+
+  const availabilityText =
+    hero?.availability_badge ||
+    profile.availability_status ||
+    "Available for new work";
+
+  const primaryCtaLabel = hero?.primary_cta_label || "View my work";
+  const primaryCtaUrl = hero?.primary_cta_url || "#projects";
+
+  const secondaryCtaLabel =
+    hero?.secondary_cta_label || "Let's work together";
+  const secondaryCtaUrl = hero?.secondary_cta_url || "#contact";
+
+  const imageUrl = hero?.image_url || profile.profile_image_url;
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden px-4 sm:px-6 lg:px-24 bg-white dark:bg-slate-950 transition-colors duration-500">
-      
-      {/* --- Background Decorations --- */}
-      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.03] pointer-events-none"
-        style={{ backgroundImage: `linear-gradient(#22c55e 1px, transparent 1px), linear-gradient(90deg, #22c55e 1px, transparent 1px)`, backgroundSize: '45px 45px' }} />
+    <section
+      id="hero"
+      className="relative overflow-hidden px-6 pb-20 pt-8 sm:px-8 lg:min-h-[calc(100vh-80px)] lg:px-12 lg:pb-12 lg:pt-12"
+    >
+      {/* Decorative background */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-32 top-20 h-72 w-72 rounded-full bg-[#b6d900]/10 blur-3xl dark:bg-[#91aa00]/10" />
 
-      <div className="absolute top-1/4 left-0 w-full max-w-sm h-[400px] bg-green-500/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-full max-w-md h-[500px] bg-green-500/10 blur-[150px] rounded-full pointer-events-none" />
+        <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-[#b6d900]/10 blur-3xl dark:bg-[#91aa00]/10" />
 
-      <div className="container mx-auto flex flex-col-reverse lg:grid lg:grid-cols-2 gap-10 items-center z-10 pt-10 md:pt-20 lg:pt-0">
-
-        {/* --- Left Side Content --- */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6 lg:space-y-8 text-center lg:text-left"
-        >
-          {/* Available for Hire */}
-          <motion.div variants={fadeInUp} className="flex items-center gap-3 justify-center lg:justify-start">
-            <span className="h-[2px] w-10 bg-green-600 dark:bg-green-500 rounded-full"></span>
-            <h1 className="text-green-700 dark:text-green-500 tracking-[0.3em] text-xs md:text-sm uppercase font-bold">
-              Available for Hire
-            </h1>
-          </motion.div>
-
-          {/* Name & Role */}
-          <motion.div variants={fadeInUp} className="space-y-2">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[0.9] text-slate-900 dark:text-white">
-              I&apos;m <span className="text-green-600 dark:text-green-500">{nameParts[0]}</span>
-            </h2>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[0.9] text-slate-900 dark:text-white">
-              {nameParts.slice(1).join(' ')}
-            </h2>
-
-            <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-slate-600 dark:text-gray-200 pt-4">
-              <TypeAnimation
-                sequence={[profile?.title || 'Full Stack Web Developer', 2000, 'MERN Stack Developer', 2000]}
-                repeat={Infinity}
-              />
-            </div>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p variants={fadeInUp} className="text-slate-600 dark:text-gray-400 max-w-lg mx-auto lg:mx-0 leading-relaxed text-base sm:text-lg italic border-l-0 lg:border-l-2 border-green-500/20 pl-0 lg:pl-6">
-            {profile?.short_bio || 'Focused on building high-performance web applications using the MERN stack. I bridge the gap between clean code and user-centric design.'}
-          </motion.p>
-
-          {/* Buttons */}
-          <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-3 sm:gap-5 pt-4 items-center lg:items-start">
-            <motion.a href={profile?.resume_url || '/MERN.pdf'} download whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-[0_10px_30px_rgba(34,197,94,0.3)] w-full sm:w-auto">
-              Get Resume <FaDownload size={16} />
-            </motion.a>
-
-            <motion.a href="#contact" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-              className="border-2 border-green-600/30 dark:border-green-500/30 hover:border-green-600 dark:hover:border-green-500 py-4 px-10 rounded-xl transition-all text-green-700 dark:text-green-500 font-bold bg-green-50 dark:bg-green-500/5 backdrop-blur-sm w-full sm:w-auto text-center">
-              Contact Me
-            </motion.a>
-          </motion.div>
-
-          {/* Social Icons */}
-          <motion.div variants={fadeInUp} className="flex gap-5 sm:gap-8 text-xl sm:text-2xl text-slate-500 dark:text-gray-500 justify-center lg:justify-start">
-            <a href="https://github.com/aminur-tech" className="hover:text-green-600 dark:hover:text-green-500 transition-all hover:-translate-y-1"><FaGithub /></a>
-            <a href="https://www.linkedin.com/in/aminur-rahman4078" className="hover:text-green-600 dark:hover:text-green-500 transition-all hover:-translate-y-1"><FaLinkedin /></a>
-            <a href="mailto:aminur.programme@gmail.com" className="hover:text-green-600 dark:hover:text-green-500 transition-all hover:-translate-y-1"><FaEnvelope /></a>
-          </motion.div>
-        </motion.div>
-
-
-        {/* --- Right Side: Image --- */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-          className="relative flex justify-center lg:justify-end items-end h-full mt-10 md:mt-0"
-        >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-green-500/30 blur-[80px] rounded-full z-0 opacity-60" />
-
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-square max-w-[450px] border border-green-500/5 rounded-full" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] aspect-square max-w-[400px] border border-green-500/10 rounded-full animate-pulse" />
-
-          <div className="relative z-10 w-full max-w-[280px] sm:max-w-[400px] lg:max-w-[550px]"
-            style={{
-              maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
-            }}>
-              <img
-              src={profile?.profile_image_url || "/logo.png"}
-              alt={profile?.name || "Aminur Rahman"}
-              className="w-full h-auto filter brightness-110 contrast-[1.05]"
-            />
-          </div>
-        </motion.div>
+        <div className="absolute right-[10%] top-[15%] hidden h-40 w-40 rounded-full border border-[#17211d]/10 lg:block dark:border-[#f1f4ef]/10" />
       </div>
 
-      {/* Scroll Down Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 md:flex flex-col items-center gap-2 cursor-pointer z-20 hidden"
-        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-      >
-        <span className="text-[10px] uppercase tracking-[0.5em] text-slate-500 dark:text-gray-500 font-bold mb-1">Scroll Down</span>
-        <motion.div animate={{ y: [0, 8, 0], opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.5 }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
-          </svg>
-        </motion.div>
-      </motion.div>
+      <div className="relative mx-auto flex min-h-[calc(100vh-140px)] max-w-7xl items-center">
+        <div className="grid w-full items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut" }}
+          >
+            {/* Availability */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#17211d]/10 bg-white/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] dark:border-[#f1f4ef]/10 dark:bg-white/[0.04]"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#b6d900] opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#b6d900]" />
+              </span>
+
+              {availabilityText}
+            </motion.div>
+
+            {/* Heading */}
+            <h1 className="max-w-5xl text-[clamp(3.2rem,7vw,7.5rem)] font-semibold leading-[0.9] tracking-[-0.065em]">
+              {heading}
+            </h1>
+
+            {/* Highlight */}
+            <motion.div
+              initial={{ opacity: 0, x: -15 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.25, duration: 0.55 }}
+              className="mt-6 flex items-center gap-3"
+            >
+              <span className="h-1 w-10 rounded-full bg-[#b6d900] sm:w-16" />
+
+              <span className="text-lg font-medium tracking-tight text-[#17211d]/70 sm:text-xl dark:text-[#f1f4ef]/70">
+                {highlightedText}
+              </span>
+            </motion.div>
+
+            {/* Description */}
+            <p className="mt-7 max-w-2xl text-base leading-7 text-[#17211d]/65 sm:text-lg sm:leading-8 dark:text-[#f1f4ef]/65">
+              {description}
+            </p>
+
+            {/* CTAs */}
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={primaryCtaUrl}
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#17211d] px-6 py-3.5 text-sm font-semibold text-[#f6f6f2] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl dark:bg-[#f1f4ef] dark:text-[#101613]"
+              >
+                {primaryCtaLabel}
+
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+
+              <a
+                href={secondaryCtaUrl}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#17211d]/15 bg-white/40 px-6 py-3.5 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-white dark:border-[#f1f4ef]/15 dark:bg-white/[0.03] dark:hover:bg-white/[0.07]"
+              >
+                {secondaryCtaLabel}
+              </a>
+
+              {activeResume?.file_url && (
+                <a
+                  href={activeResume.file_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#17211d]/15 px-5 py-3.5 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 dark:border-[#f1f4ef]/15"
+                >
+                  <Download className="h-4 w-4" />
+                  Resume
+                </a>
+              )}
+            </div>
+
+            {/* Scroll indicator */}
+            <a
+              href="#about"
+              className="mt-14 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[#17211d]/45 transition-colors hover:text-[#17211d] dark:text-[#f1f4ef]/45 dark:hover:text-[#f1f4ef]"
+            >
+              <span className="grid h-9 w-9 place-items-center rounded-full border border-[#17211d]/10 dark:border-[#f1f4ef]/10">
+                <ArrowDown className="h-4 w-4 animate-bounce" />
+              </span>
+
+              Scroll to explore
+            </a>
+          </motion.div>
+
+          {/* Image / Visual */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
+            className="relative mx-auto w-full max-w-md lg:ml-auto"
+          >
+            {/* Floating badge */}
+            <div className="absolute right-2 top-2 z-10 grid min-h-20 w-20 rotate-6 transform-gpu place-items-center rounded-2xl bg-[#b6d900] p-3 text-center text-xs font-bold leading-tight text-[#17211d] shadow-xl dark:bg-[#91aa00]">
+              <Sparkles className="mb-1 h-4 w-4" />
+              Build.
+              <br />
+              Ship.
+              <br />
+              Iterate.
+            </div>
+
+            {/* Image frame */}
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-[#e4e7de] dark:bg-[#1a211d]">
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt={profile.name || "Profile"}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center p-8">
+                  <div className="text-center">
+                    <div className="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-full bg-[#b6d900] text-2xl font-bold text-[#17211d]">
+                      {profile.name?.charAt(0) || "A"}
+                    </div>
+
+                    <p className="text-xl font-semibold tracking-tight">
+                      {profile.name}
+                    </p>
+
+                    <p className="mt-2 text-sm opacity-50">
+                      {profile.title}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Image overlay */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#101613]/35 to-transparent" />
+            </div>
+
+            {/* Decorative ring */}
+            <div className="pointer-events-none absolute -bottom-8 -left-8 -z-10 h-32 w-32 rounded-full border-[24px] border-[#b6d900]/20 dark:border-[#91aa00]/10" />
+
+            {/* Name card */}
+            <div className="absolute -bottom-5 left-5 rounded-2xl border border-white/20 bg-[#17211d]/90 px-5 py-4 text-[#f6f6f2] shadow-2xl backdrop-blur-xl dark:bg-[#f1f4ef]/90 dark:text-[#101613]">
+              <p className="text-sm font-semibold">{profile.name}</p>
+
+              {profile.location && (
+                <p className="mt-1 text-xs opacity-55">{profile.location}</p>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

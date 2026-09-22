@@ -1,153 +1,137 @@
-"use client"
-import React from 'react';
-import { Layers, ArrowRight } from 'lucide-react';
-import { motion as Motion } from 'framer-motion';
-import type { Project } from '../../types/portfolio';
+import React from "react";
+import {
+  ArrowUpRight,
+  ExternalLink,
+  Github,
+  Layers3,
+} from "lucide-react";
 
-export default function Projects({ projects: dynamicProjects = [] }: { projects?: Project[] }) {
-  const fallbackProjects = [
-    {
-      title: 'Digital-Life-Lessons',
-      description:
-        'Digital Life Lessons is a platform where users can create, store, and share meaningful life lessons, personal growth insights, and wisdom. Built with React, Tailwind CSS, Firebase Auth, Node.js, Express.js, and MongoDB.',
-      link: 'https://digital-life-lessons-seven.vercel.app',
-      tags: ['React', 'Node.js', 'JavaScript', 'MongoDB'],
-      accent: 'from-emerald-500 to-teal-400',
-    },
-    {
-      title: 'PlateShare',
-      description:
-        'Community-driven food-sharing platform to reduce food waste and help the needy. Built with React, Tailwind CSS, Firebase Auth, Node.js, Express.js, and MongoDB.',
-      link: 'https://plate-share-client-olive.vercel.app',
-      tags: ['React', 'Node.js', 'JavaScript', 'MongoDB'],
-      accent: 'from-emerald-500 to-teal-400',
-    },
-    {
-      title: 'Hero Kidz',
-      description:
-        "Hero Kidz is a modern, single-vendor e-commerce web application built with Next.js. Designed for selling children's products and toys online.",
-      link: 'https://hero-kidz-six.vercel.app',
-      tags: ['Next.js', 'NextAuth.js', 'JavaScript', 'MongoDB'],
-      accent: 'from-emerald-500 to-teal-400',
-    },
-    {
-      title: 'ReWeb',
-      description:
-        'Integrated Research & Web Development Service Platform with real-time connectivity, smooth animations, premium UI experience, secure authentication, and SEO optimization. Built using Next.js 16, React 19, TypeScript, Tailwind CSS v4, GSAP, Framer Motion, Pusher JS, and Next-Auth.',
-      link: 'https://reweb-topaz.vercel.app',
-      tags: [
-        'Next.js',
-        'React 19',
-        'TypeScript',
-        'Tailwind CSS',
-        'GSAP',
-        'Framer Motion',
-        'Pusher JS',
-        'Next-Auth',
-      ],
-      accent: 'from-violet-500 to-fuchsia-500',
-    },
-  ];
-  const projects = dynamicProjects.length > 0
-    ? dynamicProjects.map((project) => ({
-      title: project.title,
-      description: project.short_description,
-      link: project.demo_url || project.github_url || '#',
-      tags: project.technologies,
-      accent: 'from-emerald-500 to-teal-400',
-    }))
-    : fallbackProjects;
+import { Project } from "../../types/portfolio";
+
+type ProjectsProps = {
+  projects: Project[];
+};
+
+const Projects = ({ projects }: ProjectsProps) => {
   return (
-    <section className="relative w-full md:w-11/12 mx-auto px-4 py-12 md:p-4 bg-white dark:bg-slate-950 transition-colors duration-500" id="projects">
+    <section
+      id="projects"
+      className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32"
+    >
+      <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div className="max-w-2xl">
+          <p className="eyebrow mb-4">
+            Selected work
+          </p>
 
-      {/* Background Decorations */}
-      <div className="absolute top-0 left-1/4 w-72 h-72 md:w-96 md:h-96 bg-emerald-500/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-72 h-72 md:w-96 md:h-96 bg-blue-500/5 blur-[120px] pointer-events-none" />
+          <h2 className="section-title">
+            Projects built with purpose.
+          </h2>
+        </div>
 
-      <Motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-12 md:mb-24"
-      >
-        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-slate-900 dark:text-white">
-          Featured <span className="text-emerald-600 dark:text-emerald-500">Projects</span>
-        </h2>
-      </Motion.div>
+        <div className="max-w-md text-sm leading-7 text-[#17211d]/65 dark:text-[#f1f4ef]/65">
+          A selection of products and platforms focused on practical
+          problems, thoughtful interfaces, and reliable engineering.
+        </div>
+      </div>
 
-      <div className="flex flex-col gap-12 md:gap-32">
+      <div className="grid gap-6 md:grid-cols-2">
         {projects.map((project, index) => (
-          <Motion.div
-            key={index}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="sticky top-28 w-full group"
+          <article
+            key={project.id}
+            className={`group relative overflow-hidden rounded-[2rem] border border-[#17211d]/10 bg-white/70 dark:border-[#f1f4ef]/10 dark:bg-white/[0.03] ${
+              index === 0 ? "md:col-span-2" : ""
+            }`}
           >
-            <div className="relative overflow-hidden bg-white dark:bg-slate-900/40 backdrop-blur-2xl border border-slate-200 dark:border-white/5 rounded-3xl md:rounded-[4rem] p-6 sm:p-8 md:p-16 shadow-xl dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 group-hover:border-emerald-500/30">
+            <div
+              className={`relative overflow-hidden ${
+                index === 0
+                  ? "h-[420px] md:h-[560px]"
+                  : "h-[360px]"
+              }`}
+            >
+              {project.thumbnail_url ? (
+                <img
+                  src={project.thumbnail_url}
+                  alt={project.title}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-[#e9ebe5] dark:bg-[#18201c]">
+                  <Layers3 className="h-16 w-16 opacity-20" />
+                </div>
+              )}
 
-              <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-700`} />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#101613]/90 via-[#101613]/20 to-transparent" />
 
-              <span className="absolute -right-4 -bottom-4 md:-right-6 md:-bottom-10 text-[6rem] sm:text-[12rem] md:text-[20rem] font-black text-slate-900/[0.03] dark:text-white/[0.015] leading-none select-none group-hover:text-emerald-500/[0.03] transition-colors duration-700">
-                0{index + 1}
-              </span>
+              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {project.technologies
+                    ?.slice(0, 5)
+                    .map((technology) => (
+                      <span
+                        key={technology}
+                        className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-md"
+                      >
+                        {technology}
+                      </span>
+                    ))}
+                </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative z-10">
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-4 mb-6 md:mb-8">
-                      <div className={`h-10 w-10 md:h-12 md:w-12 rounded-xl md:rounded-2xl bg-gradient-to-br ${project.accent} flex items-center justify-center text-white font-black rotate-3 group-hover:rotate-0 transition-transform shadow-lg`}>
-                        0{index + 1}
-                      </div>
-                      <div className="h-[1px] w-8 md:w-12 bg-slate-300 dark:bg-slate-700"></div>
-                      <span className="text-[10px] font-mono tracking-[0.3em] text-slate-500 uppercase">Case Study</span>
-                    </div>
-
-                    <h3 className="text-2xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 text-slate-900 dark:text-white tracking-tight group-hover:translate-x-1 md:group-hover:translate-x-2 transition-transform duration-500">
+                <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                  <div className="max-w-2xl">
+                    <h3 className="text-2xl font-semibold tracking-tight text-white md:text-3xl">
                       {project.title}
                     </h3>
 
-                    <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
-                      {project.tags.map(tag => (
-                        <span key={tag} className="text-[9px] md:text-[10px] font-bold tracking-widest text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/5 border border-emerald-500/10 px-3 py-1 md:px-4 md:py-1.5 rounded-lg uppercase">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-xl leading-relaxed max-w-xl font-light">
-                      {project.description}
-                    </p>
+                    {project.short_description && (
+                      <p className="mt-3 max-w-xl text-sm leading-6 text-white/75 md:text-base">
+                        {project.short_description}
+                      </p>
+                    )}
                   </div>
 
-                  <div className="mt-8 md:mt-12">
-                    <Motion.a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="group/btn relative inline-flex items-center gap-3 px-6 md:px-10 py-3.5 md:py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl md:rounded-2xl overflow-hidden shadow-lg shadow-emerald-500/20"
+                  <div className="flex shrink-0 items-center gap-2">
+                    <a
+                      href={`/projects/${project.slug}`}
+                      className="inline-flex items-center gap-2 rounded-full bg-[#b6d900] px-5 py-3 text-sm font-semibold text-[#17211d] transition-transform duration-300 hover:-translate-y-0.5"
                     >
-                      <span className="relative z-10 uppercase tracking-tighter text-xs md:text-sm">Explore Live Demo</span>
-                      <ArrowRight className="relative z-10 w-4 h-4 md:w-5 md:h-5 group-hover/btn:translate-x-2 transition-transform" />
-                    </Motion.a>
-                  </div>
-                </div>
+                      View project
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
 
-                <div className="hidden lg:flex items-center justify-center relative min-h-[400px]">
-                  <div className="absolute inset-0 bg-emerald-500/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                  <div className="relative w-full h-full bg-slate-100 dark:bg-slate-800/30 rounded-3xl border border-slate-200 dark:border-white/5 overflow-hidden flex items-center justify-center group-hover:scale-[1.02] transition-transform duration-700">
-                    <Layers className="w-24 h-24 text-slate-300 dark:text-white/5 group-hover:text-emerald-500/10 transition-colors" />
-                    <div className="absolute top-0 left-0 w-full h-full border-[1px] border-emerald-500/5 scale-90 rounded-2xl pointer-events-none" />
+                    {project.demo_url && (
+                      <a
+                        href={project.demo_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open ${project.title} live demo`}
+                        className="grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    )}
+
+                    {project.github_url && (
+                      <a
+                        href={project.github_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open ${project.title} GitHub repository`}
+                        className="grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20"
+                      >
+                        <Github className="h-4 w-4" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          </Motion.div>
+          </article>
         ))}
       </div>
     </section>
   );
-}
+};
+
+export default Projects;

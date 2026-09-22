@@ -44,7 +44,7 @@ function normalizeData(input: Record<string, unknown>) {
   for (const [key, value] of Object.entries(input)) {
     if (ignoredFields.has(key) || value === undefined) continue;
     if (dateFields.has(key)) data[key] = value ? new Date(String(value)) : null;
-    else if (arrayFields.has(key)) data[key] = Array.isArray(value) ? value.map(String).filter(Boolean) : String(value ?? "").split(",").map((item) => item.trim()).filter(Boolean);
+    else if (arrayFields.has(key)) data[key] = Array.isArray(value) ? value.map(String).filter(Boolean) : String(value ?? "").split(":").map((item) => item.trim()).filter(Boolean);
     else if (booleanFields.has(key)) data[key] = value === true || value === "true";
     else if (numberFields.has(key)) {
       if (value === "" || value === null) {
