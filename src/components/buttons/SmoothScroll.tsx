@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import React, { useRef } from "react";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,32 +8,80 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+type SmoothScrollProps = {
+  children: React.ReactNode;
+};
+
+export default function SmoothScroll({ children }: SmoothScrollProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   useGSAP(() => {
-    // 1. Initialize Lenis
+    // 1. Initialize Lenis with premium, weightier physics
     const lenis = new Lenis({
-      lerp: 0.1, // Smoothness factor (lower = smoother/slower)
-      wheelMultiplier: 1.2, // Speed multiplier for mouse wheel
+      lerp: 0.07, // Slightly lowered for a more luxurious, weighty feel
+      wheelMultiplier: 1,
+      touchMultiplier: 2, // Prevents trackpads/touch from feeling sluggish
       gestureOrientation: "vertical",
+      smoothWheel: true,
     });
 
-    // 2. Sync Lenis with GSAP ScrollTrigger
-    lenis.on("scroll", ScrollTrigger.update);
+    /* =========================
+       LENIS → GSAP SYNC
+    ========================== */
+    const handleScroll = () => {
+      ScrollTrigger.update();
+    };
+    lenis.on("scroll", handleScroll);
 
-    // 3. Add Lenis to GSAP's ticker
-    gsap.ticker.add((time) => {
+    /* =========================
+       GSAP → LENIS SYNC
+    ========================== */
+    const updateLenis = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(updateLenis);
 
-    // 4. Disable lag smoothing for GSAP to prevent "stuttering" on scroll
+    /* =========================
+       PREVENT DOUBLE SMOOTHING
+    ========================== */
     gsap.ticker.lagSmoothing(0);
 
+    /* =========================
+       DYNAMIC LAYOUT TRACKING
+    ========================== */
+    // This prevents ScrollTrigger markers from breaking when React 
+    // dynamically renders content, opens accordions, or loads lazy images.
+    let resizeObserver: ResizeObserver | null = null;
+    
+    if (contentRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        ScrollTrigger.refresh();
+      });
+      resizeObserver.observe(contentRef.current);
+    } else {
+      // Fallback just in case
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    }
+
+    /* =========================
+       CLEANUP
+    ========================== */
     return () => {
-      // 5. Cleanup on unmount
+      lenis.off("scroll", handleScroll);
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
+      
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
     };
   }, []);
 
-  return <>{children}</>;
+  return (
+    <div ref={contentRef} className="relative w-full">
+      {children}
+    </div>
+  );
 }

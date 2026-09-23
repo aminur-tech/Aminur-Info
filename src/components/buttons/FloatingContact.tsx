@@ -1,66 +1,84 @@
 "use client";
-import { FaWhatsapp, FaEnvelope } from "react-icons/fa";
-import { motion, Variants } from "framer-motion";
 
+import React from "react";
+import { motion, Variants } from "framer-motion";
+import { MessageCircle, Mail } from "lucide-react";
+
+// Premium spring animation for fluid entry
 const itemVariants: Variants = {
-  hidden: { opacity: 0, x: 40, scale: 0.8 },
+  hidden: { opacity: 0, y: 30, scale: 0.8 },
   visible: (i: number) => ({
     opacity: 1,
-    x: 0,
+    y: 0,
     scale: 1,
     transition: {
       delay: i * 0.15,
       type: "spring",
-      stiffness: 120,
-      damping: 12
-    }
-  })
+      stiffness: 300,
+      damping: 24,
+    },
+  }),
 };
 
 export default function FloatingContact() {
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      className="fixed right-6 -bottom-1/4 transform -translate-y-1/2 md:right-4 md:bottom-1/4 z-50 flex flex-col gap-4 overflow-x-hidden"
-    >
-      {/* WhatsApp */}
+    <div className="fixed bottom-6 right-6 z-[90] flex flex-col gap-4 md:bottom-10 md:right-10">
+      
+      {/* WhatsApp Button */}
       <motion.a
         custom={0}
+        initial="hidden"
+        animate="visible"
         variants={itemVariants}
-        whileHover={{ scale: 1.12 }}
+        whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         href="https://wa.me/8801327694078"
         target="_blank"
         rel="noopener noreferrer"
-        className="relative group"
+        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/25 ring-1 ring-white/20 transition-colors hover:bg-[#20bd5a] dark:ring-white/10"
+        aria-label="Contact via WhatsApp"
       >
-        <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center shadow-xl ring-2 ring-green-400/30 animate-pulse">
-          <FaWhatsapp className="text-white text-xl" />
-        </div>
+        <MessageCircle className="h-6 w-6" />
+        
+        {/* Subtle continuous ripple effect */}
+        <span className="absolute -inset-1.5 -z-10 animate-ping rounded-full bg-[#25D366]/30 duration-1000" />
 
-        <span className="absolute right-16 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 transition-all backdrop-blur bg-black/70 text-white text-xs px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg">
-          WhatsApp Me
-        </span>
+        {/* Floating Tooltip */}
+        <div className="pointer-events-none absolute right-[calc(100%+16px)] top-1/2 flex -translate-y-1/2 translate-x-2 items-center opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+          <span className="whitespace-nowrap rounded-xl bg-[#17211d] px-3.5 py-2 text-xs font-bold tracking-wide text-[#f6f6f2] shadow-xl dark:bg-[#f1f4ef] dark:text-[#101613]">
+            WhatsApp Me
+          </span>
+          {/* Tooltip Caret */}
+          <div className="h-0 w-0 border-y-[6px] border-l-[8px] border-y-transparent border-l-[#17211d] dark:border-l-[#f1f4ef]" />
+        </div>
       </motion.a>
 
-      {/* Email */}
+      {/* Email Button */}
       <motion.a
         custom={1}
+        initial="hidden"
+        animate="visible"
         variants={itemVariants}
-        whileHover={{ scale: 1.12 }}
+        whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         href="https://mail.google.com/mail/?view=cm&fs=1&to=aminur.programme@gmail.com"
-        className="relative group"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-white text-[#17211d] shadow-xl shadow-black/10 ring-1 ring-black/5 transition-colors hover:bg-[#f8f9f5] dark:bg-[#17211d] dark:text-[#f1f4ef] dark:shadow-black/40 dark:ring-white/10 dark:hover:bg-[#1f2d28]"
+        aria-label="Contact via Email"
       >
-        <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center shadow-xl ring-2 ring-blue-400/30">
-          <FaEnvelope className="text-white text-lg" />
-        </div>
+        <Mail className="h-6 w-6" />
 
-        <span className="absolute right-16 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 transition-all backdrop-blur bg-black/70 text-white text-xs px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg">
-          Email Me
-        </span>
+        {/* Floating Tooltip */}
+        <div className="pointer-events-none absolute right-[calc(100%+16px)] top-1/2 flex -translate-y-1/2 translate-x-2 items-center opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+          <span className="whitespace-nowrap rounded-xl bg-[#17211d] px-3.5 py-2 text-xs font-bold tracking-wide text-[#f6f6f2] shadow-xl dark:bg-[#f1f4ef] dark:text-[#101613]">
+            Email Me
+          </span>
+          {/* Tooltip Caret */}
+          <div className="h-0 w-0 border-y-[6px] border-l-[8px] border-y-transparent border-l-[#17211d] dark:border-l-[#f1f4ef]" />
+        </div>
       </motion.a>
-    </motion.div>
+      
+    </div>
   );
 }

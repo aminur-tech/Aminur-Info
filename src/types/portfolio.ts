@@ -138,7 +138,7 @@ export type HeroContent = {
   primary_cta_url: string | null;
   secondary_cta_label: string | null;
   secondary_cta_url: string | null;
-  availability_badge: string | null;
+  availabilityBadge: string | null;
   image_url: string | null;
 };
 

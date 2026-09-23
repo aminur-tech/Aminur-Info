@@ -1,27 +1,31 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { motion, useSpring } from 'framer-motion';
+
+import React, { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
-  // Spring physics for extra smoothness 
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
-  const cursorX = useSpring(0, springConfig);
-  const cursorY = useSpring(0, springConfig);
+  // 1. Zero-rerender motion values for instant tracking
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  // 2. Fluid spring physics for the trailing ring
+  const springConfig = { damping: 28, stiffness: 200, mass: 0.5 };
+  const cursorX = useSpring(mouseX, springConfig);
+  const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const moveMouse = (e) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const moveMouse = (e: MouseEvent) => {
+      // Updates the motion values directly, bypassing React state
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
-    const handleHover = (e) => {
-      const target = e.target;
-      // বাটন, লিংক বা ইন্টারঅ্যাক্টিভ এলিমেন্টের ওপর গেলে কার্সার বড় হবে
-      if (target.closest('button, a, [role="button"]')) {
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      // Detect interactive elements for hover state
+      if (target.closest('button, a, input, textarea, [role="button"]')) {
         setIsHovering(true);
       } else {
         setIsHovering(false);
@@ -29,51 +33,72 @@ export default function CustomCursor() {
     };
 
     window.addEventListener("mousemove", moveMouse);
-    window.addEventListener("mouseover", handleHover);
+    window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
       window.removeEventListener("mousemove", moveMouse);
-      window.removeEventListener("mouseover", handleHover);
+      window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [cursorX, cursorY]);
+  }, [mouseX, mouseY]);
 
   return (
     <>
-      {/* ১. মেইন ছোট ডট (Precision Dot) */}
+      {/* 
+        Note: For the best experience, add this to your global CSS:
+        @media (min-width: 1024px) {
+          * { cursor: none !important; }
+        }
+      */}
+
+      {/* 1. Precision Dot (Instant Tracking) */}
       <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-emerald-400 rounded-full pointer-events-none z-[9999] hidden lg:block"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-2 w-2 rounded-full bg-[#b6d900] mix-blend-difference lg:block"
         style={{
-          x: mousePosition.x - 3,
-          y: mousePosition.y - 3,
+          x: mouseX,
+          y: mouseY,
+          translateX: "-50%",
+          translateY: "-50%",
         }}
-      />
-
-      {/* ২. বড় রিং (Lagging Fluid Ring) */}
-      <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] hidden lg:block border border-emerald-500/50"
         animate={{
-          width: isHovering ? 64 : 32,
-          height: isHovering ? 64 : 32,
-          x: isHovering ? mousePosition.x - 32 : mousePosition.x - 16,
-          y: isHovering ? mousePosition.y - 32 : mousePosition.y - 16,
-          backgroundColor: isHovering ? "rgba(16, 185, 129, 0.1)" : "rgba(16, 185, 129, 0)",
-          borderColor: isHovering ? "rgba(16, 185, 129, 1)" : "rgba(16, 185, 129, 0.5)",
+          scale: isHovering ? 0 : 1, // Shrink dot when hovering
+          opacity: isHovering ? 0 : 1,
         }}
-        transition={{ type: "spring", damping: 30, stiffness: 200, mass: 0.6 }}
+        transition={{ duration: 0.2 }}
       />
 
-      {/* ৩. আউটার গ্লো (Subtle Ambient Glow) */}
-      {isHovering && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed top-0 left-0 w-[100px] h-[100px] bg-emerald-500/20 blur-3xl rounded-full pointer-events-none z-[9997] hidden lg:block"
-          style={{
-            x: mousePosition.x - 50,
-            y: mousePosition.y - 50,
-          }}
-        />
-      )}
+      {/* 2. Fluid Ring (Spring Physics) */}
+      <motion.div
+        className="pointer-events-none fixed left-0 top-0 z-[9998] hidden rounded-full border border-[#b6d900]/60 mix-blend-difference lg:block"
+        style={{
+          x: cursorX,
+          y: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+        animate={{
+          width: isHovering ? 72 : 36,
+          height: isHovering ? 72 : 36,
+          backgroundColor: isHovering ? "rgba(182, 217, 0, 0.15)" : "rgba(182, 217, 0, 0)",
+          borderColor: isHovering ? "rgba(182, 217, 0, 1)" : "rgba(182, 217, 0, 0.5)",
+        }}
+        transition={{ type: "spring", damping: 25, stiffness: 300, mass: 0.5 }}
+      />
+
+      {/* 3. Subtle Ambient Glow (Optional) */}
+      <motion.div
+        className="pointer-events-none fixed left-0 top-0 z-[9997] hidden h-32 w-32 rounded-full bg-[#b6d900]/10 blur-[40px] lg:block"
+        style={{
+          x: cursorX,
+          y: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+        animate={{
+          scale: isHovering ? 1.5 : 1,
+          opacity: isHovering ? 1 : 0,
+        }}
+        transition={{ duration: 0.4 }}
+      />
     </>
   );
 }

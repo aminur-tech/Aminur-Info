@@ -30,6 +30,9 @@ import {
   getSeoSettings,
   getSiteSettings,
 } from "../lib/queries/portfolio";
+import FloatingContact from "../components/buttons/FloatingContact";
+import ScrollToTopButton from "../components/buttons/ScrollToTopButton";
+import CustomCursor from "../components/buttons/CustomCursor";
 
 export async function generateMetadata() {
   const seo = await getSeoSettings();
@@ -100,13 +103,9 @@ export default async function HomePage() {
 
   return (
     <main className="portfolio-page">
-      {/* 
-        This wrapper keeps the exact styling that previously
-        existed inside PremiumPortfolio.
-      */}
       <div
         className="
-          overflow-hidden
+          overflow-clip
           bg-[#f6f6f2]
           text-[#17211d]
           selection:bg-[#b6d900]
@@ -176,9 +175,9 @@ export default async function HomePage() {
         <FinalCTA />
 
         {/* CONTACT */}
-      <div id="contact">
-        <Contact profile={profile} />
-      </div>
+        <div id="contact">
+          <Contact profile={profile} />
+        </div>
 
         {/* FOOTER */}
         <Footer
@@ -186,8 +185,9 @@ export default async function HomePage() {
           siteSettings={siteSettings}
         />
       </div>
-
-      
+      <FloatingContact/>
+      <ScrollToTopButton/>
+      <CustomCursor/>
     </main>
   );
 }

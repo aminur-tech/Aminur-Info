@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import React from "react";
+
 import Navbar from "../home/Navbar";
 import SmoothScroll from "../buttons/SmoothScroll";
 
@@ -11,13 +12,25 @@ export default function AppShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+
   const isAdminRoute = pathname.startsWith("/admin");
 
-  if (isAdminRoute) return <>{children}</>;
+  /* =========================
+     ADMIN
+  ========================== */
+
+  if (isAdminRoute) {
+    return <>{children}</>;
+  }
+
+  /* =========================
+     PUBLIC PORTFOLIO
+  ========================== */
 
   return (
     <SmoothScroll>
       <Navbar />
+
       {children}
     </SmoothScroll>
   );

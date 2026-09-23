@@ -30,7 +30,7 @@ export const getProfile = unstable_cache(async (): Promise<Profile> => {
 export const getHero = unstable_cache(async (): Promise<HeroContent | null> => {
   if (!env.DATABASE_URL || env.SKIP_DATABASE === "true") return null;
   const hero = await db.hero.findFirst();
-  return hero ? { heading: hero.heading, highlighted_text: hero.highlightedText, description: hero.description, primary_cta_label: hero.primaryCtaLabel, primary_cta_url: hero.primaryCtaUrl, secondary_cta_label: hero.secondaryCtaLabel, secondary_cta_url: hero.secondaryCtaUrl, availability_badge: hero.availabilityBadge, image_url: hero.imageUrl } : null;
+  return hero ? { heading: hero.heading, highlighted_text: hero.highlightedText, description: hero.description, primary_cta_label: hero.primaryCtaLabel, primary_cta_url: hero.primaryCtaUrl, secondary_cta_label: hero.secondaryCtaLabel, secondary_cta_url: hero.secondaryCtaUrl, availabilityBadge: hero.availabilityBadge, image_url: hero.imageUrl } : null;
 }, ["portfolio-hero"], { revalidate: 300 });
 
 export const getSiteSettings = unstable_cache(async (): Promise<SiteSettingsContent | null> => {

@@ -1,19 +1,22 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { HiArrowUp } from "react-icons/hi2";
 
-const ScrollToTopButton = () => {
-  const [showButton, setShowButton] = useState(false);
+import React, { useState } from "react";
+import { 
+  motion, 
+  AnimatePresence, 
+  useScroll, 
+  useMotionValueEvent 
+} from "framer-motion";
+import { ArrowUp } from "lucide-react";
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show button after scrolling 400px (standard UX for landing pages)
-      setShowButton(window.scrollY > 400);
-    };
+export default function ScrollToTopButton() {
+  const { scrollY } = useScroll();
+  const [isVisible, setIsVisible] = useState(false);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Highly optimized scroll listener from Framer Motion
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsVisible(latest > 400);
+  });
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -23,19 +26,35 @@ const ScrollToTopButton = () => {
   };
 
   return (
-    <button
-      type="button"
-      onClick={scrollToTop}
-      aria-label="Scroll to top"
-      className={`fixed right-6 bottom-6 z-50 p-3 rounded-full bg-emerald-500 text-white shadow-lg transition-all duration-300 ease-out hover:bg-emerald-600 hover:-translate-y-1 active:scale-95 ${
-        showButton 
-          ? "opacity-100 translate-y-0" 
-          : "opacity-0 translate-y-10 pointer-events-none"
-      }`}
-    >
-      <HiArrowUp className="w-6 h-6" />
-    </button>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 25 
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={scrollToTop}
+          aria-label="Scroll to top"
+          className="
+            fixed bottom-6 left-6 z-[90] 
+            flex h-12 w-12 items-center justify-center 
+            rounded-full border border-[#17211d]/10 bg-white/80 text-[#17211d] 
+            shadow-xl backdrop-blur-xl transition-colors 
+            hover:border-[#b6d900] hover:bg-[#b6d900] 
+            md:bottom-10 md:left-10 
+            dark:border-white/10 dark:bg-[#17211d]/80 dark:text-[#f1f4ef] 
+            dark:hover:bg-[#b6d900] dark:hover:text-[#101613]
+          "
+        >
+          <ArrowUp className="h-5 w-5" />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
-};
-
-export default ScrollToTopButton;
+}
