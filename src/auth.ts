@@ -18,28 +18,36 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Credentials({
       credentials: { email: {}, password: {} },
       async authorize(rawCredentials) {
-        const parsed = credentialsSchema.safeParse(rawCredentials);
-        if (!parsed.success) return null;
+        try {
+          const parsed = credentialsSchema.safeParse(rawCredentials);
+          if (!parsed.success) return null;
 
-        const user = await db.user.findUnique({ where: { email: parsed.data.email.trim().toLowerCase() } });
-        if (!user?.passwordHash || !user.isActive || user.role !== "ADMIN") return null;
-        if (!(await bcrypt.compare(parsed.data.password, user.passwordHash))) return null;
+          const user = await db.user.findUnique({
+            where: { email: parsed.data.email.trim().toLowerCase() },
+          });
 
-        return { id: user.id, name: user.name, email: user.email, role: user.role };
+          if (!user || !user.passwordHash || !user.isActive || user.role !== "ADMIN") {
+            return null;
+          }
+
+          const isPasswordValid = await bcrypt.compare(
+            parsed.data.password,
+            user.passwordHash,
+          );
+
+          if (!isPasswordValid) return null;
+
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error("Auth Authorize Error:", error);
+          return null;
+        }
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) token.role = user.role;
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.sub ?? "";
-        session.user.role = String(token.role ?? "USER");
-      }
-      return session;
-    },
-  },
 });
