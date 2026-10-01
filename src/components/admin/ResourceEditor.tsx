@@ -606,7 +606,7 @@ export default function ResourceEditor({
 
   return (
     <div className="min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8">
-      <div className="mx-auto grid min-w-0 max-w-7xl gap-5 xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-6">
+      <div className="mx-auto grid min-w-0 max-w-7xl gap-5 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-6">
 
         {/* =========================
             CONTENT LIST
@@ -753,10 +753,22 @@ export default function ResourceEditor({
           </div>
 
           {/* Fields */}
-          <div className="space-y-4">
+          <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-1">
             {fields.map(
-              (field) =>
-                renderField(field)
+              (field) => (
+                <div
+                  key={field.name}
+                  className={
+                    field.type === "textarea" ||
+                    field.type === "image" ||
+                    field.type === "icon"
+                      ? "lg:col-span-2 2xl:col-span-1"
+                      : undefined
+                  }
+                >
+                  {renderField(field)}
+                </div>
+              )
             )}
           </div>
 

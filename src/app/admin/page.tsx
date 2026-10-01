@@ -22,26 +22,26 @@ export default async function AdminPage() {
   ] as const;
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] p-6 sm:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="min-h-[calc(100vh-4rem)] min-w-0 p-4 sm:p-6 lg:p-8">
+      <div className="mx-auto min-w-0 max-w-7xl">
         <div className="mb-8">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Overview</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight">Good to see you, {session.user?.name ?? "Admin"}.</h1>
+          <h1 className="mt-2 break-words text-2xl font-black tracking-tight sm:text-3xl">Good to see you, {session.user?.name ?? "Admin"}.</h1>
           <p className="mt-2 text-slate-500 dark:text-slate-400">Keep your public portfolio current from one place.</p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {cards.map(([label, value]) => (
-            <div key={label} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div key={label} className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 dark:border-slate-800 dark:bg-slate-900">
               <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{label}</p>
               <p className="mt-3 text-3xl font-black">{value}</p>
             </div>
           ))}
         </div>
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-8 dark:border-slate-700 dark:bg-slate-900">
+        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-5 sm:p-8 dark:border-slate-700 dark:bg-slate-900">
           <h2 className="text-lg font-bold">Quick actions</h2>
           <div className="mt-4 flex flex-wrap gap-3">
             {[["/admin/projects", "Manage projects"], ["/admin/skills", "Manage skills"], ["/admin/hero", "Edit hero"]].map(([href, label]) => (
-              <a key={href} href={href} className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700">{label}</a>
+              <a key={href} href={href} className="max-w-full whitespace-normal rounded-lg bg-emerald-600 px-4 py-2.5 text-left text-sm font-bold text-white transition hover:bg-emerald-700">{label}</a>
             ))}
           </div>
         </div>
