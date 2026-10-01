@@ -26,6 +26,7 @@ export type Field = {
   required?: boolean;
   placeholder?: string;
   separator?: string;
+  imageOnly?: boolean;
 };
 
 type RecordValue =
@@ -469,6 +470,7 @@ export default function ResourceEditor({
         <ImageUploader
           key={field.name}
           label={field.label}
+          imageOnly={field.imageOnly}
           value={String(
             value ?? ""
           )}
@@ -603,8 +605,8 @@ export default function ResourceEditor({
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] p-6 sm:p-8">
-      <div className="mx-auto grid max-w-7xl gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+    <div className="min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8">
+      <div className="mx-auto grid min-w-0 max-w-7xl gap-5 xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-6">
 
         {/* =========================
             CONTENT LIST
@@ -615,7 +617,7 @@ export default function ResourceEditor({
               Content
             </p>
 
-            <h1 className="mt-2 text-3xl font-black tracking-tight">
+            <h1 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">
               {title}
             </h1>
 
@@ -657,7 +659,7 @@ export default function ResourceEditor({
                 (record) => (
                   <div
                     key={record.id}
-                    className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-emerald-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-900"
+                    className="flex min-w-0 flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-emerald-200 hover:shadow-md sm:flex-row sm:items-center sm:justify-between sm:gap-4 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-900"
                   >
                     <div className="min-w-0">
                       <p className="truncate font-bold">
@@ -680,7 +682,7 @@ export default function ResourceEditor({
                       </p>
                     </div>
 
-                    <div className="flex shrink-0 gap-2">
+                    <div className="flex shrink-0 justify-end gap-2 sm:justify-start">
                       <button
                         type="button"
                         onClick={() =>
@@ -720,7 +722,7 @@ export default function ResourceEditor({
         ========================== */}
         <form
           onSubmit={submit}
-          className="h-fit rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+          className="h-fit min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 dark:border-slate-800 dark:bg-slate-900"
         >
           {/* Header */}
           <div className="mb-5 flex items-center justify-between gap-3">

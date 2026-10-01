@@ -106,7 +106,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       </aside>
 
       {/* Main Content Area */}
-      <div className="lg:pl-64">
+      <div className="min-w-0 lg:pl-64">
         {/* Top Header */}
         <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95 sm:px-6">
           <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           </div>
         </header>
 
-        <main>{children}</main>
+        <main className="min-w-0">{children}</main>
       </div>
     </div>
   );
